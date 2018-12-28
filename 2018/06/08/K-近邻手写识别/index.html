@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      K-近邻手写识别 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="使用KNN手写识别 算法概述K-近邻（KNN）是一个较为简单的机器学习有监督算法，简单来说训练数据都有标签（lable），则为有监督学习，如果数据没有标签，则为无监督学习。对于KNN算法，其一般流程如下：    计算已知类别数据集中的点与当前点之间的距离;   按照距离递增次序排序; 选取与当前点距离最小的k个点; 确定前k个点所在类别的出现频率; 返回前k个点出现频率最高的类别最为当前点的预测分">
+<meta name="keywords" content="机器学习,数据挖掘,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K-近邻手写识别 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2018/06/08/K-近邻手写识别/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="使用KNN手写识别 算法概述K-近邻（KNN）是一个较为简单的机器学习有监督算法，简单来说训练数据都有标签（lable），则为有监督学习，如果数据没有标签，则为无监督学习。对于KNN算法，其一般流程如下：    计算已知类别数据集中的点与当前点之间的距离;   按照距离递增次序排序; 选取与当前点距离最小的k个点; 确定前k个点所在类别的出现频率; 返回前k个点出现频率最高的类别最为当前点的预测分">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/Wechat0.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/Wechat6.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/Wechat8231.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/3.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/Result_sys.png">
+<meta property="og:updated_time" content="2018-06-09T03:06:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K-近邻手写识别 | LiuHuan">
+<meta name="twitter:description" content="使用KNN手写识别 算法概述K-近邻（KNN）是一个较为简单的机器学习有监督算法，简单来说训练数据都有标签（lable），则为有监督学习，如果数据没有标签，则为无监督学习。对于KNN算法，其一般流程如下：    计算已知类别数据集中的点与当前点之间的距离;   按照距离递增次序排序; 选取与当前点距离最小的k个点; 确定前k个点所在类别的出现频率; 返回前k个点出现频率最高的类别最为当前点的预测分">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/08/K-近邻手写识别/K-近邻手写识别/Wechat0.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">K-近邻手写识别</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-08" class="post-meta__date date">2018-06-08</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/Python/">Python</a>, <a class="tags-link" href="/tags/数据挖掘/">数据挖掘</a>, <a class="tags-link" href="/tags/机器学习/">机器学习</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="使用KNN手写识别"><a href="#使用KNN手写识别" class="headerlink" title="使用KNN手写识别"></a>使用KNN手写识别</h2><hr>
+<h3 id="算法概述"><a href="#算法概述" class="headerlink" title="算法概述"></a>算法概述</h3><p>K-近邻（KNN）是一个较为简单的机器学习有监督算法，简单来说训练数据都有标签（lable），则为有监督学习，如果数据没有标签，则为无监督学习。对于KNN算法，其一般流程如下：  </p>
+<ol>
+<li>计算已知类别数据集中的点与当前点之间的距离;  </li>
+<li>按照距离递增次序排序;</li>
+<li>选取与当前点距离最小的k个点;</li>
+<li>确定前k个点所在类别的出现频率;</li>
+<li>返回前k个点出现频率最高的类别最为当前点的预测分类. </li>
+</ol>
+<h3 id="算法应用"><a href="#算法应用" class="headerlink" title="算法应用"></a>算法应用</h3><p>为了简单，我们这里只进行简单的数字0~9的识别  </p>
+<ol>
+<li><p>我们已经得到已知类别的数据集合，对于每个类别的数据集合有约为200个样本，每个样本是用32X32的矩阵来表示，其中用1表写的痕迹，如图所示分别表示0和6。<br><img src="K-近邻手写识别/Wechat0.png" alt=""> <img src="K-近邻手写识别/Wechat6.png" alt=""><br> 在实际操作中为了便于计算距离，可将每个样本数据矩阵用img2vetor函数转化为一个1024长的向量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2vector</span><span class="params">(filename)</span>:</span></span><br><span class="line">returnVect = zeros((<span class="number">1</span>, <span class="number">1024</span>))  </span><br><span class="line">fr = open(filename)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>): </span><br><span class="line">    lineStr = fr.readline() <span class="comment">#读取第i行</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>): </span><br><span class="line">        returnVect[<span class="number">0</span>, <span class="number">32</span> * i + j] = int(lineStr[j]) </span><br><span class="line"><span class="keyword">return</span> returnVect</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接下来我们构造测试数据，就以我的手机号后四位数字8231为例，我写下如图的手写体数字<br><img src="K-近邻手写识别/Wechat8231.jpg" alt=""><br>将图像RGB转换为灰度图后，采用如下函数可将图像数据转化为01矩阵或者向量</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">blackWrite</span><span class="params">(img)</span>:</span></span><br><span class="line">    blackXY = zeros((<span class="number">1</span>,<span class="number">1024</span>))</span><br><span class="line">    <span class="comment"># 遍历像素点</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">            <span class="keyword">if</span> img.getpixel((x,y))&lt;<span class="number">128</span>:</span><br><span class="line">                blackXY[<span class="number">0</span>,<span class="number">32</span>*y+x]=<span class="number">1</span> <span class="comment"># 置为黑点</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                blackXY[<span class="number">0</span>,<span class="number">32</span>*y+x] =<span class="number">0</span> <span class="comment"># 置为白点</span></span><br><span class="line">    <span class="keyword">return</span> blackXY</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="K-近邻手写识别/8.png" alt=""> <img src="K-近邻手写识别/3.png" alt=""></p>
+<ol start="3">
+<li>同样的对数据进行处理，形成与已知类别数据集合相同排列顺序的1X1024的01向量。计算每个测试数据与样本之间的距离,并选取距离最小的k个点<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX, dataSet, labels, k)</span>:</span></span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">	<span class="comment">#计算距离</span></span><br><span class="line">    diffMat = tile(inX, (dataSetSize, <span class="number">1</span>)) - dataSet</span><br><span class="line">    sqDiffMat = diffMat ** <span class="number">2</span></span><br><span class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>)   </span><br><span class="line">    distances = sqDistances ** <span class="number">0.5</span></span><br><span class="line">    sortedDistIndicies = distances.argsort()</span><br><span class="line">    classCount = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndicies[i]] <span class="comment">#选取k个距离最小的点</span></span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>) <span class="comment">#将出现的Labels个数排序</span></span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]  <span class="comment">#返回首位，即出现频率最高的类别值作为预测结果</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> operator</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> listdir</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">classify0</span><span class="params">(inX, dataSet, labels, k)</span>:</span></span><br><span class="line">    dataSetSize = dataSet.shape[<span class="number">0</span>]</span><br><span class="line">    diffMat = tile(inX, (dataSetSize, <span class="number">1</span>)) - dataSet</span><br><span class="line">    sqDiffMat = diffMat ** <span class="number">2</span></span><br><span class="line">    sqDistances = sqDiffMat.sum(axis=<span class="number">1</span>)</span><br><span class="line">    distances = sqDistances ** <span class="number">0.5</span></span><br><span class="line">    sortedDistIndicies = distances.argsort()</span><br><span class="line">    classCount = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</span><br><span class="line">        voteIlabel = labels[sortedDistIndicies[i]]</span><br><span class="line">        classCount[voteIlabel] = classCount.get(voteIlabel, <span class="number">0</span>) + <span class="number">1</span></span><br><span class="line">    sortedClassCount = sorted(classCount.iteritems(), key=operator.itemgetter(<span class="number">1</span>), reverse=<span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">return</span> sortedClassCount[<span class="number">0</span>][<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">img2vector</span><span class="params">(filename)</span>:</span></span><br><span class="line">    returnVect = zeros((<span class="number">1</span>, <span class="number">1024</span>))</span><br><span class="line">    fr = open(filename)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">        lineStr = fr.readline()</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">            returnVect[<span class="number">0</span>, <span class="number">32</span> * i + j] = int(lineStr[j])</span><br><span class="line">    <span class="keyword">return</span> returnVect</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">handwritingClassTest</span><span class="params">()</span>:</span></span><br><span class="line">    hwLabels = []</span><br><span class="line">    trainingFileList = listdir(<span class="string">'trainingDigits'</span>)  <span class="comment"># load the training set</span></span><br><span class="line">    m = len(trainingFileList)</span><br><span class="line">    trainingMat = zeros((m, <span class="number">1024</span>))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(m):</span><br><span class="line">        fileNameStr = trainingFileList[i]</span><br><span class="line">        fileStr = fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>]  <span class="comment"># take off .txt</span></span><br><span class="line">        classNumStr = int(fileStr.split(<span class="string">'_'</span>)[<span class="number">0</span>])</span><br><span class="line">        hwLabels.append(classNumStr)</span><br><span class="line">        trainingMat[i, :] = img2vector(<span class="string">'trainingDigits/%s'</span> % fileNameStr)</span><br><span class="line">    testFileList = listdir(<span class="string">'testImgs'</span>)  <span class="comment"># iterate through the test set</span></span><br><span class="line">    errorCount = <span class="number">0.0</span></span><br><span class="line">    mTest = len(testFileList)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(mTest):</span><br><span class="line">        fileNameStr = testFileList[i]</span><br><span class="line">        classNumStr = int(fileNameStr.split(<span class="string">'.'</span>)[<span class="number">0</span>] ) <span class="comment"># take off .txt</span></span><br><span class="line">        im = Image.open(<span class="string">'testImgs/%s'</span> % fileNameStr) </span><br><span class="line">        L = im.convert(<span class="string">'L'</span>) <span class="comment"># RGB 转换为灰度图</span></span><br><span class="line">        vectorUnderTest= blackWrite(L)</span><br><span class="line">        classifierResult = classify0(vectorUnderTest, trainingMat, hwLabels, <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"the classifier came back with: %d, the real answer is: %d"</span> % (classifierResult, classNumStr)</span><br><span class="line">        <span class="keyword">if</span> (classifierResult != classNumStr): errorCount += <span class="number">1.0</span></span><br><span class="line">    <span class="keyword">print</span> <span class="string">"\nthe total number of errors is: %d"</span> % errorCount</span><br><span class="line">    <span class="keyword">print</span> <span class="string">"\nthe total error rate is: %f"</span> % (errorCount / float(mTest))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">blackWrite</span><span class="params">(img)</span>:</span></span><br><span class="line">    blackXY = zeros((<span class="number">1</span>,<span class="number">1024</span>))</span><br><span class="line">    <span class="comment"># 遍历像素点</span></span><br><span class="line">    <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">        <span class="keyword">for</span> y <span class="keyword">in</span> range(<span class="number">32</span>):</span><br><span class="line">            <span class="keyword">if</span> img.getpixel((x,y))&lt;<span class="number">128</span>:</span><br><span class="line">                blackXY[<span class="number">0</span>,<span class="number">32</span>*y+x]=<span class="number">1</span> <span class="comment"># 置为黑点</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                blackXY[<span class="number">0</span>,<span class="number">32</span>*y+x] =<span class="number">0</span> <span class="comment"># 置为白点</span></span><br><span class="line">    <span class="keyword">return</span> blackXY</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">handwritingClassTest()</span><br></pre></td></tr></table></figure>
+<p>结果分析：<br>the classifier came back with: 1, the real answer is: 1<br>the classifier came back with: 4, the real answer is: 2<br>the classifier came back with: 3, the real answer is: 3<br>the classifier came back with: 8, the real answer is: 8<br>the total number of errors is: 1<br>the total error rate is: 0.250000<br>Process finished with exit code 0</p>
+<p>还是存在一定的识别错误，原因是系统手写体4与我的手写体2比较相似，例如当k=10时，存在有2个识别为1，8个识别为4。T_T我的手写体2就那么难以被识别吗。。。<br><img src="K-近邻手写识别/Result_sys.png" alt=""></p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

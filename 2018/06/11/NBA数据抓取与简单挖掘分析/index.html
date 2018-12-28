@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      NBA数据抓取与简单挖掘分析 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="数据抓取今年老詹虽然没拿冠军，但是他真的很神奇，打破了很多NBA的记录。NBA总是有这样或者那样的记录，都是通过一场场球员的数据来统计得到的，现在我们可以通过python语句，从NBA官网上抓取球员数据进行统计，如该博文中的程序 https://www.cnblogs.com/buddyquan/archive/2017/02/18/6412157.html具体过程不再多说，代码做了稍稍修改如下">
+<meta name="keywords" content="K-mean,数据挖掘,Python,爬虫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NBA数据抓取与简单挖掘分析 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="数据抓取今年老詹虽然没拿冠军，但是他真的很神奇，打破了很多NBA的记录。NBA总是有这样或者那样的记录，都是通过一场场球员的数据来统计得到的，现在我们可以通过python语句，从NBA官网上抓取球员数据进行统计，如该博文中的程序 https://www.cnblogs.com/buddyquan/archive/2017/02/18/6412157.html具体过程不再多说，代码做了稍稍修改如下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/2.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/figure_1.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/figure_2.png">
+<meta property="og:updated_time" content="2018-06-13T00:57:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NBA数据抓取与简单挖掘分析 | LiuHuan">
+<meta name="twitter:description" content="数据抓取今年老詹虽然没拿冠军，但是他真的很神奇，打破了很多NBA的记录。NBA总是有这样或者那样的记录，都是通过一场场球员的数据来统计得到的，现在我们可以通过python语句，从NBA官网上抓取球员数据进行统计，如该博文中的程序 https://www.cnblogs.com/buddyquan/archive/2017/02/18/6412157.html具体过程不再多说，代码做了稍稍修改如下">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/11/NBA数据抓取与简单挖掘分析/1.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">NBA数据抓取与简单挖掘分析</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-11" class="post-meta__date date">2018-06-11</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/K-mean/">K-mean</a>, <a class="tags-link" href="/tags/Python/">Python</a>, <a class="tags-link" href="/tags/数据挖掘/">数据挖掘</a>, <a class="tags-link" href="/tags/爬虫/">爬虫</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="数据抓取"><a href="#数据抓取" class="headerlink" title="数据抓取"></a>数据抓取</h2><p>今年老詹虽然没拿冠军，但是他真的很神奇，打破了很多NBA的记录。NBA总是有这样或者那样的记录，都是通过一场场球员的数据来统计得到的，现在我们可以通过python语句，从NBA官网上抓取球员数据进行统计，如该博文中的程序 <a href="https://www.cnblogs.com/buddyquan/archive/2017/02/18/6412157.html" target="_blank" rel="noopener">https://www.cnblogs.com/buddyquan/archive/2017/02/18/6412157.html</a><br>具体过程不再多说，代码做了稍稍修改如下      </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding=utf-8</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">reload(sys)</span><br><span class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</span><br><span class="line">user_agent = <span class="string">'User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)'</span></span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>:user_agent&#125;</span><br><span class="line">url=<span class="string">'http://china.nba.com/static/data/league/playerlist.json'</span></span><br><span class="line"><span class="comment">#解析网页</span></span><br><span class="line">r=requests.get(url,headers=headers).json()</span><br><span class="line">num=int(len(r[<span class="string">'payload'</span>][<span class="string">'players'</span>]))<span class="number">-1</span> <span class="comment">#得到列表r['payload']['players']的长度</span></span><br><span class="line">p1_cols=[] <span class="comment">#用来存放p1数组的列</span></span><br><span class="line">p2_cols=[] <span class="comment">#用来存放p2数组的列</span></span><br><span class="line"><span class="comment">#遍历其中一个['playerProfile']，['teamProfile'] 得到各自列名，添加到p1_cols和p2_cols列表中</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> r[<span class="string">'payload'</span>][<span class="string">'players'</span>][<span class="number">0</span>][<span class="string">'playerProfile'</span>]:</span><br><span class="line">    p1_cols.append(x)</span><br><span class="line"><span class="keyword">for</span> y <span class="keyword">in</span> r[<span class="string">'payload'</span>][<span class="string">'players'</span>][<span class="number">0</span>][<span class="string">'teamProfile'</span>]:</span><br><span class="line">    p2_cols.append(y)</span><br><span class="line">p1=pd.DataFrame(columns=p1_cols) <span class="comment">#初始化一个DataFrame p1 用来存放playerProfile下的数据</span></span><br><span class="line">p2=pd.DataFrame(columns=p2_cols) <span class="comment">#初始化一个DataFrame p1 用来存放playerProfile下的数据</span></span><br><span class="line"> <span class="comment">#遍历一次得到一个球员的信息，分别添加到DataFrame数组中</span></span><br><span class="line"><span class="keyword">for</span> z <span class="keyword">in</span> range(num):</span><br><span class="line">    player=pd.DataFrame([r[<span class="string">'payload'</span>][<span class="string">'players'</span>][z][<span class="string">'playerProfile'</span>]])</span><br><span class="line">    team=pd.DataFrame([r[<span class="string">'payload'</span>][<span class="string">'players'</span>][z][<span class="string">'teamProfile'</span>]])</span><br><span class="line">    p1=p1.append(player,ignore_index=<span class="keyword">True</span>)</span><br><span class="line">    p2=p2.append(team,ignore_index=<span class="keyword">True</span>)</span><br><span class="line">p3=pd.merge(p1,p2,left_index=<span class="keyword">True</span>,right_index=<span class="keyword">True</span>) <span class="comment">#数据合并</span></span><br><span class="line">p3.to_csv(<span class="string">'e:/NBA/nba_player.csv'</span>,index=<span class="keyword">False</span>)<span class="comment">#可保存到CSV文件，便于查看</span></span><br></pre></td></tr></table></figure>
+<p>需要值得进一步说明的是，大多数情况下，网站都会根据我们的请求头信息来区分你是不是一个爬虫程序，如果一旦识别出这是一个爬虫程序，很容易就会拒绝我们的请求，因此我们需要给我们的爬虫手动添加请求头信息，来模拟浏览器的行为，因此可通过这样的代码实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user_agent = <span class="string">'User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)'</span> </span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>:user_agent&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数据处理"><a href="#数据处理" class="headerlink" title="数据处理"></a>数据处理</h2><p>有了上述的数据，为了便于分析，我们就要对变量p3或者CSV表格中的数据进行提取，从而得到我们想要的数据类型。以球员身高体重为例，会出现如图的情况<br><img src="1.png" alt="">    <img src="2.png" alt=""><br>我们常常希望获得的数据是整形或者浮点等一些结构化的数据，但所抓取的球员身高表示方法不一致，体重数据上的小数点竟然用中文逗号来表示，此外，我们还需要去掉多余的中文汉字。因此，在分析之前应对数据进行处理，便与后续的计算。可通过如下代码进行处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="comment"># 打开文件</span></span><br><span class="line">csv_file = pd.read_csv(<span class="string">"e:/NBA/nba_player.csv"</span>)</span><br><span class="line">length = len(csv_file)</span><br><span class="line">weight = csv_file.weight.values</span><br><span class="line">position = csv_file.position.values</span><br><span class="line">height = csv_file.height.values</span><br><span class="line">hlist = range(length)</span><br><span class="line">wlist = range(length)</span><br><span class="line">plist = range(length)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">    <span class="keyword">if</span> len(height[i]) == <span class="number">6</span>:</span><br><span class="line">        hlist[i] = float((height[i][<span class="number">0</span>] + <span class="string">"."</span> + height[i][<span class="number">4</span>:<span class="number">6</span>]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        hlist[i] = float(height[i])</span><br><span class="line">    weight[i] = weight[i].strip(<span class="string">'公斤'</span>).strip()</span><br><span class="line">    temp = weight[i].decode(<span class="string">"utf8"</span>)</span><br><span class="line">    wlist[i] = float(</span><br><span class="line">        re.sub(<span class="string">"[\s+\.\!\/_,$%^*(+\"\']+|[+——！，。？、~@#￥%……&amp;*（）]+"</span>.decode(<span class="string">"utf8"</span>), <span class="string">""</span>.decode(<span class="string">"utf8"</span>), temp)) / <span class="number">10</span></span><br><span class="line">    position[i] = position[i].strip()</span><br><span class="line">    pos_type = &#123;<span class="string">'中锋'</span>: <span class="number">0</span>, <span class="string">'中锋-前锋'</span>: <span class="number">1</span>, <span class="string">'前锋-中锋'</span>: <span class="number">2</span>, <span class="string">'前锋'</span>: <span class="number">3</span>, <span class="string">'前锋-后卫'</span>: <span class="number">4</span>, <span class="string">'后卫-前锋'</span>: <span class="number">5</span>, <span class="string">'后卫'</span>: <span class="number">6</span>&#125; </span><br><span class="line">    plist[i] = pos_type[position[i]]	<span class="comment"># 用字典的方法实现switch</span></span><br></pre></td></tr></table></figure>
+<p>这样我们可以的到list数据hlist、wlist、plist用来分别存放球员身高、体重、场上位置信息。</p>
+<h2 id="数据相关分析"><a href="#数据相关分析" class="headerlink" title="数据相关分析"></a>数据相关分析</h2><p>对于我们搞来的数据，我也是挤破头皮想了一些分析的场景。就拿刚刚获得的球员身高、体重、场上位置来说，一般的情况，球员身高越高、体重越重，在内线可以为所欲为，但在外线就显得笨拙，这样的情况下就会被安排到中锋（不乏有一些灵活的死胖子），例如一些小个子球员速度快、灵活，也有很好的三分投射能力，这样就被安排到了后卫的位置（恭喜183蒙面男子进了西决），还有一些球员属于摇摆人的那种，可以打很多位置，这样的球员在力量敏捷上都有着较好的表现，不得不提老詹了，号称都打到教练组了，呃呃呃。那我们不妨对球员进行聚类分析，看看所分的类别是否和球员身高体重有关，之前写了一个MATLAB的代码，以下贴出Python代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处贴上上面处理数据的代码</span></span><br><span class="line"></span><br><span class="line">K = <span class="number">7</span></span><br><span class="line">hmax = max(hlist)</span><br><span class="line">hmin = min(hlist)</span><br><span class="line">wmax = max(wlist)</span><br><span class="line">wmin = min(wlist)</span><br><span class="line">distance = range(K)</span><br><span class="line">I = range(length)</span><br><span class="line">center = np.zeros((K, <span class="number">2</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">    center[i][<span class="number">0</span>] = (hmax - hmin) / K * i + hmin</span><br><span class="line">    center[i][<span class="number">1</span>] = (wmax - wmin) / K * i + wmin</span><br><span class="line">SUME=np.zeros((<span class="number">1</span>,<span class="number">1000</span>))</span><br><span class="line"><span class="keyword">for</span> ite <span class="keyword">in</span> range(<span class="number">1000</span>):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">            distance[i] = np.square((hlist[j] - center[i][<span class="number">0</span>])*<span class="number">95</span>) + np.square(wlist[j] - center[i][<span class="number">1</span>]) <span class="comment">#这里按照身高体重公式进行处理</span></span><br><span class="line">        I[j] = distance.index(min(distance))</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">        hall=[]</span><br><span class="line">        wall=[]</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(length):</span><br><span class="line">            <span class="keyword">if</span> I[j]== i:</span><br><span class="line">                hall.append(hlist[j])</span><br><span class="line">                wall.append(wlist[j])</span><br><span class="line">        center[i][<span class="number">0</span>] = np.mean(hall)</span><br><span class="line">        center[i][<span class="number">1</span>] = np.mean(wall)</span><br><span class="line">        <span class="keyword">for</span> m <span class="keyword">in</span> range(len(hall)):</span><br><span class="line">            SUME[<span class="number">0</span>,ite]=SUME[<span class="number">0</span>,ite]+np.square((hall[m]-center[i][<span class="number">0</span>])*<span class="number">95</span>)+np.square(wall[m]-center[i][<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">print</span> ite</span><br><span class="line">    <span class="keyword">if</span> ite&gt;<span class="number">0</span>:</span><br><span class="line">        <span class="keyword">print</span> SUME[<span class="number">0</span>, ite] - SUME[<span class="number">0</span>, ite - <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">if</span> SUME[<span class="number">0</span>,ite]-SUME[<span class="number">0</span>,ite<span class="number">-1</span>]&gt;=<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(K):</span><br><span class="line">    hall = []</span><br><span class="line">    wall = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">if</span> I[j] == i:</span><br><span class="line">            hall.append(hlist[j])</span><br><span class="line">            wall.append(wlist[j])</span><br><span class="line">    colors = np.random.rand(<span class="number">0xFFFFFF</span>)</span><br><span class="line">    plt.scatter(hall,wall,s=<span class="number">50</span>,c=colors,marker=<span class="string">"p"</span>)</span><br><span class="line">    plt.hold(<span class="string">'on'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>所得到的图如下<br><img src="figure_1.png" alt=""><br>分类好像也就那样了，和一般的分类都差不多吧，不过可以进一步分析，我们将聚类的结果打个标签，从图中的右上方到左下依次贴上0~6的标签lable，表示为该球员如果按照身高体重的话他应该打的位置，plist里面保存着该球员真实的位置，我们计算lable与plist的差值，去看看真实情况与仅从身高体重出发的差别代码可在上面的代码段再添加如下几句：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">temp=<span class="number">6</span>*np.ones((<span class="number">1</span>,length));</span><br><span class="line">diff=np.abs((temp[<span class="number">0</span>]-np.array(I))-np.array(plist))</span><br><span class="line">Max_diif=int(max(diff))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(Max_diif):</span><br><span class="line">    difh_all=[]</span><br><span class="line">    difw_all=[]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">if</span> diff[j]==i:</span><br><span class="line">            difh_all.append(hlist[j])</span><br><span class="line">            difw_all.append(wlist[j])</span><br><span class="line">    plt.scatter(difh_all,difw_all,s=<span class="number">10</span>+i*<span class="number">20</span>,alpha=<span class="number">0.4</span>, marker=(<span class="number">9</span>, <span class="number">3</span>, <span class="number">30</span>))</span><br><span class="line">    plt.hold(<span class="string">'on'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure></p>
+<p>我们可以得到下面的结果，圈越小表示该球员身体情况与真实位置匹配度较好，也就是“理想型球员”。通过分析可以发现，处在左下和右上两端的球员位置比较固定，也就是说我们只要在NBA球场上看到他，我们就可以猜到他所打的位置，比如高又壮肯定中锋了，瘦又小一般都是控卫，但是在中间球员，摇摆型较多，能够胜任几个位置，这样的球员在NBA里属于大多数。<br><img src="figure_2.png" alt=""></p>
+<p>好了，由于时间原因，今天就分析这么多了，希望在后面能够从身边获取更多的数据，完成更有意义的发现。</p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

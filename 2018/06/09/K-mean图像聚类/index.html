@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      K-mean图像聚类 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="K-mean聚类算法聚类是一种无监督的学习，它将相似的的对象（例如点坐标、图像元素）归为同一个簇中。对于K-均值（K-mean）它是将k个簇的均值作为该簇的中心点。此外需要进一步说明的一点是，聚类和分类最大的不同在于，分类的目标事先已知，而聚类则不一样。因为其产生的结果与分类相同，而只是类别没有预先定义，聚类被成为无监督分类。 K-mean的算法流程可表述为这样：  随机确定k个初始点作为质心；">
+<meta name="keywords" content="机器学习,K-mean,Matlab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="K-mean图像聚类 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2018/06/09/K-mean图像聚类/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="K-mean聚类算法聚类是一种无监督的学习，它将相似的的对象（例如点坐标、图像元素）归为同一个簇中。对于K-均值（K-mean）它是将k个簇的均值作为该簇的中心点。此外需要进一步说明的一点是，聚类和分类最大的不同在于，分类的目标事先已知，而聚类则不一样。因为其产生的结果与分类相同，而只是类别没有预先定义，聚类被成为无监督分类。 K-mean的算法流程可表述为这样：  随机确定k个初始点作为质心；">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/zms.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/pic.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/K2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/K3.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/K5.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/K10.jpg">
+<meta property="og:updated_time" content="2018-06-13T01:02:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="K-mean图像聚类 | LiuHuan">
+<meta name="twitter:description" content="K-mean聚类算法聚类是一种无监督的学习，它将相似的的对象（例如点坐标、图像元素）归为同一个簇中。对于K-均值（K-mean）它是将k个簇的均值作为该簇的中心点。此外需要进一步说明的一点是，聚类和分类最大的不同在于，分类的目标事先已知，而聚类则不一样。因为其产生的结果与分类相同，而只是类别没有预先定义，聚类被成为无监督分类。 K-mean的算法流程可表述为这样：  随机确定k个初始点作为质心；">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/09/K-mean图像聚类/zms.jpg">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">K-mean图像聚类</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-09" class="post-meta__date date">2018-06-09</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/K-mean/">K-mean</a>, <a class="tags-link" href="/tags/Matlab/">Matlab</a>, <a class="tags-link" href="/tags/机器学习/">机器学习</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h2 id="K-mean聚类算法"><a href="#K-mean聚类算法" class="headerlink" title="K-mean聚类算法"></a>K-mean聚类算法</h2><p>聚类是一种无监督的学习，它将相似的的对象（例如点坐标、图像元素）归为同一个簇中。对于K-均值（K-mean）它是将k个簇的均值作为该簇的中心点。<br>此外需要进一步说明的一点是，聚类和分类最大的不同在于，分类的目标事先已知，而聚类则不一样。因为其产生的结果与分类相同，而只是类别没有预先定义，聚类被成为无监督分类。</p>
+<p><strong>K-mean的算法流程可表述为这样：</strong></p>
+<ol>
+<li>随机确定k个初始点作为质心；</li>
+<li>将数据集中的每个点寻找与其最接近的质心从而分配到以该质心为中心的簇之中；</li>
+<li>将每个簇中的点取均值作为新的质心并进行更新；</li>
+<li>计算评估函数，若满足要求则跳出算法，否则调至第2步进行迭代循环。</li>
+</ol>
+<h2 id="用K-mean算法对图像进行聚类"><a href="#用K-mean算法对图像进行聚类" class="headerlink" title="用K-mean算法对图像进行聚类"></a>用K-mean算法对图像进行聚类</h2><p>如果我们以图像RGB色彩作为聚类对象对图像进行聚类看对图像能否有什么新的变化，就以詹姆斯的头像为例┗( ´・∧・｀)┛<br><img src="zms.jpg" alt=""><br>呃呃呃，放错了，这个太逗比了，应该是这一张才对<br><img src="pic.jpg" alt=""><br>现在我们就进行算法实现，话不多说，直接上<strong>Matlab</strong>代码吧，也比较简单,这里的评估函数就取每个点到其对应簇中心的距离和。当通过更新质心反而使该评估函数变大时，个人认为此时可看过拟合，做则跳出迭代，完成K-mean算法操作。<br><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">clear all;</span><br><span class="line">imMatrix=imread(<span class="string">'pic.jpg'</span>);<span class="comment">%读取jpg图片</span></span><br><span class="line">[sizea,sizeb]=<span class="built_in">size</span>(imMatrix(:,:,<span class="number">1</span>));</span><br><span class="line">red=im2double(imMatrix(:,:,<span class="number">1</span>));</span><br><span class="line">green=im2double(imMatrix(:,:,<span class="number">2</span>));</span><br><span class="line">blue=im2double(imMatrix(:,:,<span class="number">3</span>));<span class="comment">%图片平面上每个点都为一个三维的坐标</span></span><br><span class="line">K=<span class="number">10</span>; <span class="comment">%聚类的簇数目为K</span></span><br><span class="line">Q=<span class="number">100</span>; <span class="comment">%算法最大迭代次数</span></span><br><span class="line"><span class="comment">%%%%%选取初始聚类中心</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:K</span><br><span class="line">    center(<span class="built_in">i</span>,:)=[(<span class="number">256</span>/K)*(<span class="built_in">i</span><span class="number">-1</span>)+(<span class="number">256</span>/(<span class="number">2</span>*K)) (<span class="number">256</span>/K)*(<span class="built_in">i</span><span class="number">-1</span>)+(<span class="number">256</span>/(<span class="number">2</span>*K)) (<span class="number">256</span>/K)*(<span class="built_in">i</span><span class="number">-1</span>)+(<span class="number">256</span>/(<span class="number">2</span>*K));]/<span class="number">256</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">L=<span class="built_in">length</span>(red(:));</span><br><span class="line">[~,I]=<span class="built_in">min</span>(center(:,<span class="number">1</span>));</span><br><span class="line"><span class="comment">%%%%算法迭代Q次</span></span><br><span class="line"><span class="keyword">for</span> tt=<span class="number">1</span>:Q</span><br><span class="line">    tt</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:L</span><br><span class="line">        <span class="comment">% 根据聚类中心值，计算每个对象到这些中心对象的距离的平方</span></span><br><span class="line">        <span class="comment">% red^2 +blue^2 +green^2</span></span><br><span class="line">        <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:K</span><br><span class="line">            dd(<span class="built_in">i</span>) = (red(<span class="built_in">j</span>)-center(<span class="built_in">i</span>,<span class="number">1</span>))^<span class="number">2</span> + (green(<span class="built_in">j</span>)-center(<span class="built_in">i</span>,<span class="number">2</span>))^<span class="number">2</span> + (blue(<span class="built_in">j</span>)-center(<span class="built_in">i</span>,<span class="number">3</span>))^<span class="number">2</span> ;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">        <span class="comment">%根据最小距离重新划分</span></span><br><span class="line">        [~,I(<span class="built_in">j</span>)]=<span class="built_in">min</span>(dd); <span class="comment">%I为离第j个对象最近的簇</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">%改变center的值，将其设为该簇的均值</span></span><br><span class="line">    <span class="keyword">for</span> p=<span class="number">1</span>:K</span><br><span class="line">        center(p,:) = [<span class="built_in">mean</span>(red(<span class="built_in">find</span>(I==p))) <span class="built_in">mean</span>(green(<span class="built_in">find</span>(I==p))) <span class="built_in">mean</span>(blue(<span class="built_in">find</span>(I==p)))];</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="comment">%计算评估函数</span></span><br><span class="line">    <span class="keyword">for</span> q=<span class="number">1</span>:K</span><br><span class="line">        M=(<span class="built_in">find</span>(I==q));</span><br><span class="line">        L_M=<span class="built_in">length</span>(M);</span><br><span class="line">        <span class="keyword">for</span> LL=<span class="number">1</span>:L_M</span><br><span class="line">            E(LL,q)= (red(M(LL))-center(q,<span class="number">1</span>))^<span class="number">2</span>+(green(M(LL))-center(q,<span class="number">2</span>))^<span class="number">2</span>+(blue(M(LL))-center(q,<span class="number">3</span>))^<span class="number">2</span>;</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    EEE(tt)=sum(sum(E));</span><br><span class="line">    <span class="keyword">if</span> tt&gt;<span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> EEE(tt)&gt;EEE(tt<span class="number">-1</span>)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">%用该簇的均值点来表示该簇的各个元素</span></span><br><span class="line"><span class="keyword">for</span> q=<span class="number">1</span>:K</span><br><span class="line">    M=(<span class="built_in">find</span>(I==q));</span><br><span class="line">    L_M=<span class="built_in">length</span>(M);</span><br><span class="line">    <span class="keyword">for</span> LL=<span class="number">1</span>:L_M</span><br><span class="line">        red(M(LL))=center(q,<span class="number">1</span>);</span><br><span class="line">        green(M(LL))=center(q,<span class="number">2</span>);</span><br><span class="line">        blue(M(LL))=center(q,<span class="number">3</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">% 还原图像</span></span><br><span class="line">imM(:,:,<span class="number">1</span>)=<span class="built_in">reshape</span>(red,sizea,sizeb);</span><br><span class="line">imM(:,:,<span class="number">2</span>)=<span class="built_in">reshape</span>(green,sizea,sizeb);</span><br><span class="line">imM(:,:,<span class="number">3</span>)=<span class="built_in">reshape</span>(blue,sizea,sizeb);</span><br><span class="line">imM=im2uint8(imM);</span><br><span class="line"></span><br><span class="line">imshow(imM)</span><br></pre></td></tr></table></figure></p>
+<p>代码可能有点粗糙吧，思路就是这样子的，然后我们看看最后输出K=2，k=3，k=5，k=10时的图片的样子<br><img src="K2.jpg" alt=""><br>k=2<br><img src="K3.jpg" alt=""><br>k=3<br><img src="K5.jpg" alt=""><br>k=5<br><img src="K10.jpg" alt=""><br>k=10</p>
+<p>是不是觉得k=2的时候黑白画面还是有点feel的，其实你也可也把其他照片拿来操作一波，可以看到图像聚类的效果，这个并不复杂，在一些手机相机软件上也有吧。</p>
+<h2 id="K-mean算法评价"><a href="#K-mean算法评价" class="headerlink" title="K-mean算法评价"></a>K-mean算法评价</h2><p><strong>优点：</strong> 容易实现</p>
+<p><strong>缺点：</strong> </p>
+<ol>
+<li>可能会收敛道局部最小值，在大规模数据集上收敛较慢；</li>
+<li>事先并不知道给定的数据集应该分成多少个类别才最合适；</li>
+<li>在 K-means 算法中，首先需要根据初始聚类中心来确定一个初始划分，然后对初始划分进行优化。这个初始聚类中心的选择对聚类结果有较大的影响，一旦初始值选择的不好，可能无法得到有效的聚类结果；</li>
+<li>若簇中含有异常点，将导致均值偏离严重。</li>
+</ol>
+<p><strong>改进</strong> </p>
+<ol>
+<li>对于缺点2，简单点就是K=round(sqrt(N)),还可以通过类的自动合并和分裂，得到较为合理的类型数目K，例如ISODATA算法;</li>
+<li>对于缺点3，尽量保证初始聚类中心点相聚较远，可用Canopy算法进行初始聚类;</li>
+<li>对于缺点4，可采用K-Mediods聚类，即用中位数代替均值。</li>
+</ol>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>

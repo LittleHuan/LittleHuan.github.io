@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      睿思交易信息微信群推送 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="早上给老师整理完通信数据链的报告，就想写写我最近几天搞了一个睿思交易信息微信群推送的一个小小的项目。最近是毕业季，很多毕业生在睿思上卖东西，然而这一段时间研一的准备考试，研二的也在准备找工作的东西，很容易错过睿思上的一些好东西，我之前错过了一箱吃的，被别人捷足先登，简直是错失粮基，懊悔不已。因此我在前几天想怎么才能把睿思上的交易信息通过微信自动发布推送，通过一阵捣鼓终于弄好了，步骤按照下面来做：">
+<meta name="keywords" content="Python,Linux,爬虫,微信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="睿思交易信息微信群推送 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2018/06/19/睿思交易信息微信群推送/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="早上给老师整理完通信数据链的报告，就想写写我最近几天搞了一个睿思交易信息微信群推送的一个小小的项目。最近是毕业季，很多毕业生在睿思上卖东西，然而这一段时间研一的准备考试，研二的也在准备找工作的东西，很容易错过睿思上的一些好东西，我之前错过了一箱吃的，被别人捷足先登，简直是错失粮基，懊悔不已。因此我在前几天想怎么才能把睿思上的交易信息通过微信自动发布推送，通过一阵捣鼓终于弄好了，步骤按照下面来做：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/睿思交易信息微信群推送/cuoshi.png">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/睿思交易信息微信群推送/lianjie.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/06/19/睿思交易信息微信群推送/jieguo.jpg">
+<meta property="og:updated_time" content="2018-06-19T07:28:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="睿思交易信息微信群推送 | LiuHuan">
+<meta name="twitter:description" content="早上给老师整理完通信数据链的报告，就想写写我最近几天搞了一个睿思交易信息微信群推送的一个小小的项目。最近是毕业季，很多毕业生在睿思上卖东西，然而这一段时间研一的准备考试，研二的也在准备找工作的东西，很容易错过睿思上的一些好东西，我之前错过了一箱吃的，被别人捷足先登，简直是错失粮基，懊悔不已。因此我在前几天想怎么才能把睿思上的交易信息通过微信自动发布推送，通过一阵捣鼓终于弄好了，步骤按照下面来做：">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/19/睿思交易信息微信群推送/cuoshi.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">睿思交易信息微信群推送</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2018-06-19" class="post-meta__date date">2018-06-19</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/Linux/">Linux</a>, <a class="tags-link" href="/tags/Python/">Python</a>, <a class="tags-link" href="/tags/微信/">微信</a>, <a class="tags-link" href="/tags/爬虫/">爬虫</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>早上给老师整理完通信数据链的报告，就想写写我最近几天搞了一个睿思交易信息微信群推送的一个小小的项目。最近是毕业季，很多毕业生在睿思上卖东西，然而这一段时间研一的准备考试，研二的也在准备找工作的东西，很容易错过睿思上的一些好东西，我之前错过了一箱吃的，被别人捷足先登，简直是错失粮基，懊悔不已。<br><img src="cuoshi.png" alt=""><br>因此我在前几天想怎么才能把睿思上的交易信息通过微信自动发布推送，通过一阵捣鼓终于弄好了，步骤按照下面来做：  </p>
+<ol>
+<li>睿思交易帖的Python爬取</li>
+<li>利用itchat包进行微信的登陆</li>
+<li>云端的部署和Python后台程序的守护</li>
+</ol>
+<h2 id="信息爬取"><a href="#信息爬取" class="headerlink" title="信息爬取"></a>信息爬取</h2><p>考虑到之后会在外网的云服务器上来跑程序，所以所抓取的网页也必须是外网网页，那么不能直接用内网睿思的链接，这里可以用手机版的链接，这个在外网上也能够访问。<a href="http://rsbbs.xidian.edu.cn/forum.php?mod=forumdisplay&amp;fid=110&amp;mobile=2" target="_blank" rel="noopener">http://rsbbs.xidian.edu.cn/forum.php?mod=forumdisplay&amp;fid=110&amp;mobile=2</a><br><img src="lianjie.jpg" alt=""><br>然而该网站不能直接按照发帖时间排序，只能按照回帖时间排序，然而我查看html网页过后，发现tid这个参数越大，表示发帖时间越近，然后我姐爬取前三页的帖子的tid，标题，链接，并按照tid进行降序排列，每次发送之前没有发送过的帖子，并当帖子数量较多时，对帖子数量进行限制。接着我通过爬取的链接进入每个帖子对一楼，也就是发帖人详细描述信息进行爬取，这一块儿由于每个人描述习惯不同，爬取出来的信息的格式还需要进一步调整，这里我们不再做研究。步骤如下面</p>
+<ol>
+<li>解析睿思交易手机版的网页的前page_num页；</li>
+<li>爬取帖子的tid、title、链接保存在3个list之中；</li>
+<li>将tid作为key值与其他两个属性组合成一个dict，按照key值排序，提取出钱send_num个values,也就是提取出最近send_num个发帖的标题和链接，将提取出的帖子标题与上一次最近发帖的第一个标题进行对比，找到上次发了帖子之后又新发的帖子，将新发的帖子提取出来。如果没有新发的帖子，程序直接休眠waittime时长，然后调至步骤1，如果有的话则进行下一步信息发送；</li>
+<li>对新发的帖子html文件进行爬取，采用re.findall正则表达式和replace函数对信息进行提取和删除，将整理后的信息进行发送；</li>
+<li>程序进行休眠waittime时长。</li>
+</ol>
+<h2 id="微信群发"><a href="#微信群发" class="headerlink" title="微信群发"></a>微信群发</h2><p>在python中有个itchat包，该包能够对微信进行各种操作，现在我们就用她来进行微信的登陆和群发，itchat的安装什么的就不再说了，就来说说怎么用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itchat.auto_login()</span><br></pre></td></tr></table></figure></p>
+<p>这个表示微信的登陆函数，其中也可以输入参数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hotReload=True</span><br></pre></td></tr></table></figure></p>
+<p>会自动弹出一张二维码图，表示我扫一下二维码就可以了，后面一段时间内就直接登进去了，就像是把你的登录信息保存了，不再用扫来扫去，这在程序的调试时很方便，然而当程序什么的都在本地调好后，我建议将其换为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enableCmdQR=2</span><br></pre></td></tr></table></figure></p>
+<p>因为在云服务器的linux窗口下并不会自动弹出二维码，改成这样后就能够将二维码在窗口直接打印出来<br>登陆微信后，切记别将网页版的微信挤下来，鉴于很多人习惯于在电脑客户端使用微信，这里我建议用个小号去登陆。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">itchat.search_chatrooms()</span><br></pre></td></tr></table></figure></p>
+<p>函数中的输入为群名，我们需要将该群保存在微信通讯录的群聊之中</p>
+<h2 id="云服务器的搭建"><a href="#云服务器的搭建" class="headerlink" title="云服务器的搭建"></a>云服务器的搭建</h2><ol>
+<li>首先得购买一个服务，在这里我推荐一个超级便宜的云服务器，通过学生认证之后每个月只需九块5毛钱&gt;_&lt;，那就是阿里云轻量应用服务器。买了之后把密码最好改成自己好记的，可直接用其默认的应用和系统。</li>
+<li>接下来就进行环境的部署，先安装一个xshell，左上角新建会话，输入主机号，然后输入账号和密码，一般初始账号为root，为了方便可记住用户名和密码。</li>
+<li>然后CentOS 7下Python 3的部署 - CSDN博客 <a href="https://blog.csdn.net/kyotrue/article/details/74279128" target="_blank" rel="noopener">https://blog.csdn.net/kyotrue/article/details/74279128</a> 可参考该链接完成依赖组件和python的安装，后面那个ss可以不用去管它，完成后同样的也需要安装pip3，根据python程序所调用的包并用其安装一些python包</li>
+<li>运行环境弄好之后，我们cd切换目录，输入rz命令进行上传py文件至该目录下（rz -y命令可将修改后的文件上传覆盖），接下来运行程序<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># python3 yourpyfile.py</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>等到自己登陆微信成功后，然后ctrl+z暂停程序，再输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bg %n</span><br></pre></td></tr></table></figure></p>
+<p>n表示你的进程编号，将进程放入后台，再输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python3&gt; myout.file 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<p>将进程应用保护起来（这里需要对nohup进行安装），如果不保护的话，当你退出主机后程序也就自动停下来，最后输入exit退出服务器</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>上一下自己丑陋的代码T_T<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> urllib</span><br><span class="line"><span class="keyword">import</span> itchat</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">itchat.auto_login(enableCmdQR=<span class="number">2</span>)</span><br><span class="line">chat_room=itchat.get_chatrooms(update=<span class="keyword">True</span>)</span><br><span class="line">name=<span class="string">"睿思交易"</span></span><br><span class="line">iRoom=itchat.search_chatrooms(<span class="string">"睿思交易"</span>)</span><br><span class="line"><span class="keyword">for</span> room <span class="keyword">in</span> iRoom:</span><br><span class="line">    <span class="keyword">if</span> room[<span class="string">'NickName'</span>]==name:</span><br><span class="line">        UserName=room[<span class="string">'UserName'</span>]</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">waittime=<span class="number">10800</span></span><br><span class="line">page_num=<span class="number">3</span></span><br><span class="line">send_num=<span class="number">10</span></span><br><span class="line"><span class="comment">#sys.setdefaultencoding('utf-8')</span></span><br><span class="line">user_agent = <span class="string">'User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; Maxthon 2.0)'</span></span><br><span class="line">headers = &#123;<span class="string">'User-Agent'</span>:user_agent&#125;</span><br><span class="line">url_page_pre=<span class="string">'http://rsbbs.xidian.edu.cn/forum.php?mod=forumdisplay&amp;fid=110&amp;page='</span></span><br><span class="line"></span><br><span class="line">url_page_fnl=<span class="string">'&amp;mobile=2'</span></span><br><span class="line"><span class="comment">#url='https://www.aifindu.com/'</span></span><br><span class="line"><span class="comment">#解析网页</span></span><br><span class="line">last_title=<span class="string">''</span></span><br><span class="line"><span class="keyword">while</span>(<span class="keyword">True</span>):</span><br><span class="line">    info_tid=[]</span><br><span class="line">    info_title = []</span><br><span class="line">    info_data = []</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(page_num):</span><br><span class="line">        url=url_page_pre+str(row+<span class="number">1</span>)+url_page_fnl</span><br><span class="line">        html = urllib.request.urlopen(url).read().decode()</span><br><span class="line">        info_tid=info_tid+(re.findall(<span class="string">'tid=(.+?)&amp;amp'</span>,html))</span><br><span class="line">        info_title =info_title+(re.findall(<span class="string">'(.+?)&lt;span class="by"&gt;'</span>,html))</span><br><span class="line">   <span class="comment"># info_time  = re.findall('span title=(.+?)&lt;/span&gt;&lt;/span&gt;',html)</span></span><br><span class="line">        info_data =info_data+(re.findall(<span class="string">'&lt;a href="(.+?)"  &gt;'</span>,html))</span><br><span class="line">    info_comb= np.c_[info_title,info_data]</span><br><span class="line">    <span class="comment">#info_comb= np.hstack((info_tid,info_title,info_data))</span></span><br><span class="line">    info_dict=(dict(zip(info_tid, info_comb)))</span><br><span class="line">    info_sort= list(sorted(info_dict.items(), key=<span class="keyword">lambda</span> k: k[<span class="number">0</span>],reverse = <span class="keyword">True</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">#updata data</span></span><br><span class="line">    info_send=list(info_sort)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> range(send_num):</span><br><span class="line">        info_title[row]=(info_sort[row][<span class="number">1</span>][<span class="number">0</span>])</span><br><span class="line">        info_data[row] = (info_sort[row][<span class="number">1</span>][<span class="number">1</span>])</span><br><span class="line">    info_title=info_title[<span class="number">0</span>:send_num]</span><br><span class="line">    info_data = info_data[<span class="number">0</span>:send_num]</span><br><span class="line">    <span class="comment"># 找到发帖</span></span><br><span class="line">    range_context=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(len(info_title)):</span><br><span class="line">        <span class="keyword">if</span> info_title[index]==last_title:</span><br><span class="line">            range_context=index</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> index&gt;=send_num<span class="number">-1</span>:</span><br><span class="line">            range_context=index</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    last_title=info_title[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> range_context==<span class="number">0</span>:</span><br><span class="line"><span class="comment">#        itchat.send_msg('暂无新发布',UserName)</span></span><br><span class="line">        time.sleep(waittime)</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    fabu_title = <span class="string">'【【【【发布标题】】】】'</span> + <span class="string">'\n'</span></span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(range_context+<span class="number">1</span>):</span><br><span class="line">        fabu_title=fabu_title+<span class="string">'【'</span>+str(index+<span class="number">1</span>)+<span class="string">'】'</span>+info_title[index]+<span class="string">'\n'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> range(range_context,<span class="number">-1</span>,<span class="number">-1</span>):</span><br><span class="line">        str_url = info_data[index].replace(<span class="string">'amp;'</span>, <span class="string">''</span>).replace(<span class="string">'"'</span>, <span class="string">''</span>)</span><br><span class="line">        url_context = <span class="string">'http://rsbbs.xidian.edu.cn/'</span>+str_url</span><br><span class="line">        html = urllib.request.urlopen(url_context).read().decode()</span><br><span class="line"></span><br><span class="line">        info_context_temp_list=re.findall(<span class="string">'&lt;div class="message"&gt;([\s\S]+?)&lt;div class="grey quote"&gt;'</span>,html)</span><br><span class="line">        <span class="keyword">if</span> len(info_context_temp_list)==<span class="number">0</span>:</span><br><span class="line">            info_context_temp_list = re.findall(<span class="string">'&lt;div class="message"&gt;([\s\S]+?)&lt;/div&gt;'</span>, html)</span><br><span class="line">        <span class="keyword">if</span> len(info_context_temp_list)==<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        info_context_temp0=info_context_temp_list[<span class="number">0</span>]</span><br><span class="line">        info_context_temp1 = info_context_temp0.replace(<span class="string">'&amp;nbsp;'</span>, <span class="string">' '</span>)</span><br><span class="line">        del_fuhao=re.findall(<span class="string">'&lt;(.*?)&gt;'</span>,info_context_temp1)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> range(len(del_fuhao)):</span><br><span class="line">            info_context_temp1=info_context_temp1.replace(<span class="string">'&lt;'</span>+del_fuhao[row]+<span class="string">'&gt;'</span>,<span class="string">''</span>)</span><br><span class="line">        del_str=re.findall(<span class="string">'(.*?)\r\n'</span>,info_context_temp1)[<span class="number">0</span>]</span><br><span class="line">        info_context=info_context_temp1.replace(del_str,<span class="string">''</span>).replace(<span class="string">'&lt;br /&gt;'</span>,<span class="string">''</span>).replace(<span class="string">"\r\n"</span>, <span class="string">""</span>).replace(<span class="string">"\n\n"</span>, <span class="string">""</span>).replace(<span class="string">'                                                                                                                                                                               '</span>,<span class="string">''</span>).replace(<span class="string">'                	                                                            	                                                                                                                                    '</span>,<span class="string">''</span>).replace(<span class="string">'  '</span>,<span class="string">' '</span>)</span><br><span class="line">        itchat.send_msg(<span class="string">'【'</span>+str(index+<span class="number">1</span>)+<span class="string">'】'</span>+info_context+<span class="string">'\n'</span>+<span class="string">'详情点击:'</span>+url_context, UserName)</span><br><span class="line"></span><br><span class="line">    itchat.send_msg(fabu_title, UserName)</span><br><span class="line">    time.sleep(waittime)</span><br></pre></td></tr></table></figure></p>
+<p>微信群接收效果如下：<br><img src="jieguo.jpg" alt=""><br>这里正则表达式不太会写，比较丑陋，后面还得多多学习。</p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
