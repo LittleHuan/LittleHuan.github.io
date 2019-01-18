@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      多种分类方法解决Kaggle泰坦尼克号预测问题 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="泰坦尼克预测问题该问题是根据船上的乘客信息，构建一个二分类模型来判断船上的乘客是否存活的问题。该一个非常上手的问题，网上讨论的比较多，就用这个来练练手。 数据下载链接：https://www.kaggle.com/c/3136/download-all，分为train和test数据集。 特征分析与抽取 读取相关数据，并观察部分数据  1234import pandas as pdtrain_dat">
+<meta name="keywords" content="机器学习，分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多种分类方法解决Kaggle泰坦尼克号预测问题 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="泰坦尼克预测问题该问题是根据船上的乘客信息，构建一个二分类模型来判断船上的乘客是否存活的问题。该一个非常上手的问题，网上讨论的比较多，就用这个来练练手。 数据下载链接：https://www.kaggle.com/c/3136/download-all，分为train和test数据集。 特征分析与抽取 读取相关数据，并观察部分数据  1234import pandas as pdtrain_dat">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/biao.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/Pclass.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/sex.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/age.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/age1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/SibSp.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/Parch.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/fare_nolog.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/log_fare.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/Cabin.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/Embarked.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/info_change.png">
+<meta property="og:updated_time" content="2019-01-18T05:10:10.750Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多种分类方法解决Kaggle泰坦尼克号预测问题 | LiuHuan">
+<meta name="twitter:description" content="泰坦尼克预测问题该问题是根据船上的乘客信息，构建一个二分类模型来判断船上的乘客是否存活的问题。该一个非常上手的问题，网上讨论的比较多，就用这个来练练手。 数据下载链接：https://www.kaggle.com/c/3136/download-all，分为train和test数据集。 特征分析与抽取 读取相关数据，并观察部分数据  1234import pandas as pdtrain_dat">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/18/八种分类方法解决Kaggle泰坦尼克号预测问题/biao.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">多种分类方法解决Kaggle泰坦尼克号预测问题</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2019-01-18" class="post-meta__date date">2019-01-18</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/机器学习，分类/">机器学习，分类</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <h1 id="泰坦尼克预测问题"><a href="#泰坦尼克预测问题" class="headerlink" title="泰坦尼克预测问题"></a>泰坦尼克预测问题</h1><p>该问题是根据船上的乘客信息，构建一个二分类模型来判断船上的乘客是否存活的问题。该一个非常上手的问题，网上讨论的比较多，就用这个来练练手。</p>
+<p>数据下载链接：<a href="https://www.kaggle.com/c/3136/download-all，分为train和test数据集。" target="_blank" rel="noopener">https://www.kaggle.com/c/3136/download-all，分为train和test数据集。</a></p>
+<h2 id="特征分析与抽取"><a href="#特征分析与抽取" class="headerlink" title="特征分析与抽取"></a>特征分析与抽取</h2><ul>
+<li>读取相关数据，并观察部分数据</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">train_data=pd.read_csv(<span class="string">'/Users/mac/Downloads/train.csv'</span>)</span><br><span class="line">test_data=pd.read_csv(<span class="string">'/Users/mac/Downloads/test.csv'</span>)</span><br><span class="line">train_data.head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="biao.png" alt=""></p>
+<p>数据中’Survived’列作为label，其他列作为features。在feature中存在一些NaN值，因此需要对缺失值进行处理。</p>
+<ul>
+<li>打印数据信息：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data.info()</span><br><span class="line">test_data.info()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">891</span> entries, <span class="number">0</span> to <span class="number">890</span></span><br><span class="line">Data columns (total <span class="number">12</span> columns):</span><br><span class="line">PassengerId    <span class="number">891</span> non-null int64</span><br><span class="line">Survived       <span class="number">891</span> non-null int64</span><br><span class="line">Pclass         <span class="number">891</span> non-null int64</span><br><span class="line">Name           <span class="number">891</span> non-null object</span><br><span class="line">Sex            <span class="number">891</span> non-null object</span><br><span class="line">Age            <span class="number">714</span> non-null float64</span><br><span class="line">SibSp          <span class="number">891</span> non-null int64</span><br><span class="line">Parch          <span class="number">891</span> non-null int64</span><br><span class="line">Ticket         <span class="number">891</span> non-null object</span><br><span class="line">Fare           <span class="number">891</span> non-null float64</span><br><span class="line">Cabin          <span class="number">204</span> non-null object</span><br><span class="line">Embarked       <span class="number">889</span> non-null object</span><br><span class="line">dtypes: float64(<span class="number">2</span>), int64(<span class="number">5</span>), object(<span class="number">5</span>)</span><br><span class="line">memory usage: <span class="number">83.6</span>+ KB</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">418</span> entries, <span class="number">0</span> to <span class="number">417</span></span><br><span class="line">Data columns (total <span class="number">11</span> columns):</span><br><span class="line">PassengerId    <span class="number">418</span> non-null int64</span><br><span class="line">Pclass         <span class="number">418</span> non-null int64</span><br><span class="line">Name           <span class="number">418</span> non-null object</span><br><span class="line">Sex            <span class="number">418</span> non-null object</span><br><span class="line">Age            <span class="number">332</span> non-null float64</span><br><span class="line">SibSp          <span class="number">418</span> non-null int64</span><br><span class="line">Parch          <span class="number">418</span> non-null int64</span><br><span class="line">Ticket         <span class="number">418</span> non-null object</span><br><span class="line">Fare           <span class="number">417</span> non-null float64</span><br><span class="line">Cabin          <span class="number">91</span> non-null object</span><br><span class="line">Embarked       <span class="number">418</span> non-null object</span><br><span class="line">dtypes: float64(<span class="number">2</span>), int64(<span class="number">4</span>), object(<span class="number">5</span>)</span><br><span class="line">memory usage: <span class="number">36.0</span>+ KB</span><br></pre></td></tr></table></figure>
+<p><strong>PassengerId</strong>：用户ID，是一个无用特征，进行丢弃。</p>
+<p><strong>Pclass</strong> : 乘客的船票的等级(1 = 1st, 2 = 2nd, 3 = 3rd)。</p>
+<p>经验上来说等级越高，获救的可能性越大，下图中1等座显然获救的比例较高。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">sns.countplot(x=<span class="string">"Pclass"</span>, hue=<span class="string">"Survived"</span>, data=train_data)</span><br></pre></td></tr></table></figure>
+<p><img src="Pclass.png" alt="avatar"></p>
+<p><strong>Name</strong> : 乘客名字</p>
+<p>有人从乘客名字发现一些规律，比如社会地位等等，这里暂且不去考虑。</p>
+<p><strong>Sex</strong> : 乘客性别(male, female)</p>
+<p>女士优先不多说了,我们来看看结果如何。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.countplot(x=<span class="string">"Sex"</span>, hue=<span class="string">"Survived"</span>, data=train_data)</span><br></pre></td></tr></table></figure>
+<p><img src="sex.png" alt="avatar"></p>
+<p>很显然，女士获救的可能性很大。</p>
+<p><strong>Age</strong> : 乘客年龄(Year)</p>
+<p>在危难时刻，不知道西方有没有尊老爱幼的传统。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sns.violinplot(x=<span class="string">'Survived'</span>,y=<span class="string">'Age'</span>,hue=<span class="string">'Survived'</span>,data=train_data,split=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="age.png" alt="avatar"></p>
+<p>图中看到尊老不是很明显，但是爱幼绝对是有的。获救的年龄在最下面占得比重明显比未获救的要大。</p>
+<p>此外发现Age中存在缺失值，先观察缺失值是否可看做一类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Age'</span>]=train_data[<span class="string">'Age'</span>].map(<span class="keyword">lambda</span> x:<span class="string">'yes'</span> <span class="keyword">if</span> <span class="number">0</span>&lt;x&lt;<span class="number">100</span> <span class="keyword">else</span> <span class="string">'no'</span>)</span><br><span class="line">sns.countplot(x=<span class="string">"Age"</span>, hue=<span class="string">"Survived"</span>, data=train_data)</span><br></pre></td></tr></table></figure>
+<p><img src="age1.png" alt="avatar"></p>
+<p>图中有缺失的幸存概率相对于无缺失的较小，我们因此可以将其看作一类。此处修改了train_data[‘Age’]的值，需要对train_data进行重新加载，即有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data=pd.read_csv(<span class="string">'/Users/mac/Downloads/train.csv'</span>)</span><br></pre></td></tr></table></figure>
+<p>我们对其进行分类，则对train_data和test_data更新有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Age'</span>]=train_data[<span class="string">'Age'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'child'</span> <span class="keyword">if</span> x&lt;<span class="number">12</span> <span class="keyword">else</span> <span class="string">'youth'</span> <span class="keyword">if</span> x&lt;<span class="number">30</span> <span class="keyword">else</span> <span class="string">'adlut'</span> <span class="keyword">if</span> x&lt;<span class="number">60</span> <span class="keyword">else</span> <span class="string">'old'</span> <span class="keyword">if</span> x&lt;<span class="number">75</span> <span class="keyword">else</span> <span class="string">'tooold'</span> <span class="keyword">if</span> x&gt;=<span class="number">75</span> <span class="keyword">else</span> <span class="string">'null'</span>)</span><br><span class="line"></span><br><span class="line">test_data[<span class="string">'Age'</span>]=test_data[<span class="string">'Age'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'child'</span> <span class="keyword">if</span> x&lt;<span class="number">12</span> <span class="keyword">else</span> <span class="string">'youth'</span> <span class="keyword">if</span> x&lt;<span class="number">30</span> <span class="keyword">else</span> <span class="string">'adlut'</span> <span class="keyword">if</span> x&lt;<span class="number">60</span> <span class="keyword">else</span> <span class="string">'old'</span> <span class="keyword">if</span> x&lt;<span class="number">75</span> <span class="keyword">else</span> <span class="string">'tooold'</span> <span class="keyword">if</span> x&gt;=<span class="number">75</span> <span class="keyword">else</span> <span class="string">'null'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Sibsp</strong> ：船上兄弟姐妹/配偶的人数</p>
+<p><img src="SibSp.png" alt="avatar"></p>
+<p>兄弟姐妹/配偶的人数存在差异，因此该特征有效。</p>
+<p>按照分布相似性，这里我们将（0，1~2，3~4，5~8）分为四类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Parch'</span>]=train_data[<span class="string">'Parch'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'sigle'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'small'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span>  <span class="keyword">else</span> <span class="string">'large'</span>)</span><br><span class="line">test_data[<span class="string">'Parch'</span>]=test_data[<span class="string">'Parch'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'sigle'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'small'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span>  <span class="keyword">else</span> <span class="string">'large'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Parch</strong> : 船上父母/儿女的人数</p>
+<p><img src="Parch.png" alt="avatar"></p>
+<p>分布与Sibsp特征类似。按照分布相似性，这里我们将（0，1~3，4~6）分为三类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Parch'</span>]=train_data[<span class="string">'Parch'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'sigle'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'small'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span>  <span class="keyword">else</span> <span class="string">'large'</span>)</span><br><span class="line">test_data[<span class="string">'Parch'</span>]=test_data[<span class="string">'Parch'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'sigle'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'small'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span>  <span class="keyword">else</span> <span class="string">'large'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Ticket</strong> : 船票号码</p>
+<p>应该没什么关系吧，可以去掉</p>
+<p><strong>Fare</strong> : 船票价格</p>
+<p>一般商务人士或者有钱人才能坐得起票价较高的船票，不过test集合中，其中存在一些缺失值，我们需要对其进行处理，我们将其中的缺失值用均值来填充</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_data.Fare.fillna(test_data[<span class="string">'Fare'</span>].mean(), inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>然后我们对数据进行观察，</p>
+<p><img src="fare_nolog.png" alt="avatar"></p>
+<p>数据分布不规则，需要进行缩放处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Fare'</span>]=train_data[<span class="string">'Fare'</span>].map(<span class="keyword">lambda</span> x:np.log(x+<span class="number">1</span>))</span><br><span class="line">test_data[<span class="string">'Fare'</span>]=test_data[<span class="string">'Fare'</span>].map(<span class="keyword">lambda</span> x:np.log(x+<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<p><img src="log_fare.png" alt="avatar"></p>
+<p>由图中的分布特点可以看出，将Fare特征可以分为四类（小于1,1~3,3~4,大于4）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Fare'</span>]=train_data[<span class="string">'Fare'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'very_pool'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'pool'</span> <span class="keyword">if</span> x&lt;<span class="number">3</span>  <span class="keyword">else</span> <span class="string">'rich'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span> <span class="keyword">else</span> <span class="string">'very_rich'</span>)</span><br><span class="line">test_data[<span class="string">'Fare'</span>]=test_data[<span class="string">'Fare'</span>].map(<span class="keyword">lambda</span> x: <span class="string">'very_pool'</span> <span class="keyword">if</span> x&lt;<span class="number">1</span> <span class="keyword">else</span> <span class="string">'pool'</span> <span class="keyword">if</span> x&lt;<span class="number">3</span>  <span class="keyword">else</span> <span class="string">'rich'</span> <span class="keyword">if</span> x&lt;<span class="number">4</span> <span class="keyword">else</span> <span class="string">'very_rich'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Cabin</strong> : 船舱号</p>
+<p>船舱号缺失值太多了，并且未缺失的里面的数据不是特性也不明显，不如像之前和年龄缺失值处理类似的去观察缺失值与非缺失值是否构成新的两组特征。这里直接用数据类型进行判断，type(有缺失)=int，type(无缺失)=str。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Cabin'</span>]=train_data[<span class="string">'Cabin'</span>].map(<span class="keyword">lambda</span> x:<span class="string">'yes'</span> <span class="keyword">if</span> type(x)==str <span class="keyword">else</span> <span class="string">'no'</span>)</span><br><span class="line">sns.countplot(x=<span class="string">"Cabin"</span>, hue=<span class="string">"Survived"</span>, data=train_data)</span><br></pre></td></tr></table></figure>
+<p><img src="Cabin.png" alt="avatar"></p>
+<p>貌似无缺失的情况下，存活的可能性较大点，那么我们也就将test中的数据进行这样的变换。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test_data[<span class="string">'Cabin'</span>]=test_data[<span class="string">'Cabin'</span>].map(<span class="keyword">lambda</span> x:<span class="string">'yes'</span> <span class="keyword">if</span> type(x)==str <span class="keyword">else</span> <span class="string">'no'</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>Embarked</strong> : 出发港口(C = Cherbourg, Q = Queenstown, S = Southampton)</p>
+<p>还是画图观察，看看出发港口与存活情况的关系</p>
+<p><img src="Embarked.png" alt="avatar"></p>
+<p>在C港存活概率较高，看来还是有点关系的。此外train数据中有缺失值，我们用众数S港来填充，则有</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data.Embarked.fillna(<span class="string">'S'</span>, inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>#### </p>
+<p>至此，我们将数据进行抽取完毕，看看属性</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data.info()</span><br><span class="line">test_data.info()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">891</span> entries, <span class="number">0</span> to <span class="number">890</span></span><br><span class="line">Data columns (total <span class="number">12</span> columns):</span><br><span class="line">PassengerId    <span class="number">891</span> non-null int64</span><br><span class="line">Survived       <span class="number">891</span> non-null int64</span><br><span class="line">Pclass         <span class="number">891</span> non-null int64</span><br><span class="line">Name           <span class="number">891</span> non-null object</span><br><span class="line">Sex            <span class="number">891</span> non-null object</span><br><span class="line">Age            <span class="number">891</span> non-null object</span><br><span class="line">SibSp          <span class="number">891</span> non-null object</span><br><span class="line">Parch          <span class="number">891</span> non-null object</span><br><span class="line">Ticket         <span class="number">891</span> non-null object</span><br><span class="line">Fare           <span class="number">891</span> non-null object</span><br><span class="line">Cabin          <span class="number">891</span> non-null object</span><br><span class="line">Embarked       <span class="number">891</span> non-null object</span><br><span class="line">dtypes: int64(<span class="number">3</span>), object(<span class="number">9</span>)</span><br><span class="line">memory usage: <span class="number">83.6</span>+ KB</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">418</span> entries, <span class="number">0</span> to <span class="number">417</span></span><br><span class="line">Data columns (total <span class="number">11</span> columns):</span><br><span class="line">PassengerId    <span class="number">418</span> non-null int64</span><br><span class="line">Pclass         <span class="number">418</span> non-null int64</span><br><span class="line">Name           <span class="number">418</span> non-null object</span><br><span class="line">Sex            <span class="number">418</span> non-null object</span><br><span class="line">Age            <span class="number">418</span> non-null object</span><br><span class="line">SibSp          <span class="number">418</span> non-null object</span><br><span class="line">Parch          <span class="number">418</span> non-null object</span><br><span class="line">Ticket         <span class="number">418</span> non-null object</span><br><span class="line">Fare           <span class="number">418</span> non-null object</span><br><span class="line">Cabin          <span class="number">418</span> non-null object</span><br><span class="line">Embarked       <span class="number">418</span> non-null object</span><br><span class="line">dtypes: int64(<span class="number">2</span>), object(<span class="number">9</span>)</span><br><span class="line">memory usage: <span class="number">36.0</span>+ KB</span><br></pre></td></tr></table></figure>
+<p>具体内容</p>
+<p><img src="info_change.png" alt="avatar"></p>
+<p>生成训练数据train_feature，train_label和test_feature,并进行one-hot编码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">train_label= train_data[<span class="string">'Survived'</span>]</span><br><span class="line">train_feature= train_data.drop([<span class="string">'PassengerId'</span>,<span class="string">'Survived'</span>,<span class="string">'Name'</span>,<span class="string">'Ticket'</span>],axis=<span class="number">1</span>)</span><br><span class="line">test_feature= test_data.drop([<span class="string">'PassengerId'</span>,<span class="string">'Name'</span>,<span class="string">'Ticket'</span>],axis=<span class="number">1</span>)</span><br><span class="line">train_feature = pd.get_dummies(train_feature)</span><br><span class="line">test_feature = pd.get_dummies(test_feature)</span><br></pre></td></tr></table></figure>
+<h2 id="模型构建与参数调整"><a href="#模型构建与参数调整" class="headerlink" title="模型构建与参数调整"></a>模型构建与参数调整</h2><ol>
+<li>SVM模型</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.svm <span class="keyword">import</span> SVC</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">parameters = &#123;<span class="string">'kernel'</span>:(<span class="string">'linear'</span>, <span class="string">'rbf'</span>,<span class="string">'sigmoid'</span>), <span class="string">'C'</span>:[<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>], <span class="string">'gamma'</span>:[<span class="number">0</span>,<span class="number">0.0001</span>,<span class="number">0.001</span>,<span class="number">0.01</span>,<span class="number">0.1</span>,<span class="number">1</span>]&#125;</span><br><span class="line">svr = SVC()</span><br><span class="line">clf = GridSearchCV(svr, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">svm_pre=clf.predict(test_feature)</span><br><span class="line">test_passengerId=test_data[<span class="string">'PassengerId'</span>]</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:svm_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'C'</span>: <span class="number">2</span>, <span class="string">'gamma'</span>: <span class="number">0.1</span>, <span class="string">'kernel'</span>: <span class="string">'rbf'</span>&#125; <span class="number">0.8237934904601572</span></span><br></pre></td></tr></table></figure>
+<p>提交后成绩为：0.78468</p>
+<ol>
+<li><p>决策树</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> tree</span><br><span class="line">tree=tree.DecisionTreeClassifier()</span><br><span class="line">parameters = &#123;<span class="string">'criterion'</span>:[<span class="string">'gini'</span>, <span class="string">'entropy'</span>], <span class="string">'max_depth'</span>:range(<span class="number">2</span>,<span class="number">20</span>,<span class="number">2</span>), <span class="string">'max_features'</span>:range(<span class="number">2</span>,<span class="number">20</span>,<span class="number">2</span>)</span><br><span class="line">              &#125;</span><br><span class="line">clf = GridSearchCV(tree, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">tree_pre=clf.predict(test_feature)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:tree_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'criterion'</span>: <span class="string">'entropy'</span>, <span class="string">'max_depth'</span>: <span class="number">4</span>, <span class="string">'max_features'</span>: <span class="number">16</span>&#125; <span class="number">0.8215488215488216</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>提交后成绩为：0.78468</p>
+<ol>
+<li><p>随机森林</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line">parameters = &#123;<span class="string">'n_estimators'</span>:range(<span class="number">160</span>,<span class="number">300</span>,<span class="number">20</span>),<span class="string">'max_depth'</span>:range(<span class="number">1</span>,<span class="number">12</span>,<span class="number">3</span>),</span><br><span class="line">             <span class="string">'max_features'</span>:range(<span class="number">1</span>,<span class="number">12</span>,<span class="number">3</span>)&#125;</span><br><span class="line">randtree=RandomForestClassifier()</span><br><span class="line">clf = GridSearchCV(randtree, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">rand_tree_pre=clf.predict(test_feature)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:rand_tree_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'max_depth'</span>: <span class="number">4</span>, <span class="string">'max_features'</span>: <span class="number">10</span>, <span class="string">'n_estimators'</span>: <span class="number">240</span>&#125; <span class="number">0.8237934904601572</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>提交后成绩为：0.78947</p>
+<ol>
+<li>lr模型</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line">lr=LogisticRegression()</span><br><span class="line">parameters = &#123;<span class="string">'penalty'</span>:[<span class="string">'l1'</span>, <span class="string">'l2'</span>], <span class="string">'C'</span>:[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],<span class="string">'intercept_scaling'</span>:[<span class="number">0.00001</span>,<span class="number">0.0001</span>,<span class="number">.001</span>,<span class="number">.01</span>]</span><br><span class="line">              &#125;</span><br><span class="line">clf = GridSearchCV(lr, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">lr_pre=clf.predict(test_feature)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:lr_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'C'</span>: <span class="number">2</span>, <span class="string">'intercept_scaling'</span>: <span class="number">1e-05</span>, <span class="string">'penalty'</span>: <span class="string">'l1'</span>&#125; <span class="number">0.7957351290684624</span></span><br></pre></td></tr></table></figure>
+<p>提交后成绩为：0.77990</p>
+<ol>
+<li><p>贝叶斯模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> GaussianNB</span><br><span class="line">NB=GaussianNB()</span><br><span class="line">NB.fit(train_feature,train_label)</span><br><span class="line">NB_pre=NB.predict(test_feature)</span><br><span class="line">test_passengerId=test_data[<span class="string">'PassengerId'</span>]</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:NB_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<p>提交后成绩为：0.74162</p>
+</li>
+<li><p>KNN模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line">neigh = KNeighborsClassifier()</span><br><span class="line">parameters = &#123;</span><br><span class="line">    <span class="string">'n_neighbors'</span>:range(<span class="number">8</span>,<span class="number">16</span>,<span class="number">1</span>),</span><br><span class="line">    <span class="string">'p'</span>:[<span class="number">1</span>,<span class="number">1.5</span>,<span class="number">2</span>],</span><br><span class="line">    <span class="string">'leaf_size'</span>:range(<span class="number">8</span>,<span class="number">16</span>,<span class="number">1</span>),</span><br><span class="line">&#125;</span><br><span class="line">clf = GridSearchCV(neigh, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">neigh_pre=clf.predict(test_feature)</span><br><span class="line">test_passengerId=test_data[<span class="string">'PassengerId'</span>]</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:neigh_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'leaf_size'</span>: <span class="number">10</span>, <span class="string">'n_neighbors'</span>: <span class="number">10</span>, <span class="string">'p'</span>: <span class="number">1</span>&#125; <span class="number">0.8058361391694725</span></span><br></pre></td></tr></table></figure>
+<p>提交后的成绩为：0.76555</p>
+</li>
+<li><p>GBDT模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> GradientBoostingClassifier</span><br><span class="line">gbdt=GradientBoostingClassifier()</span><br><span class="line">parameters = &#123;<span class="string">'learning_rate'</span>:[<span class="number">0.0001</span>,<span class="number">0.001</span>,<span class="number">0.1</span>],</span><br><span class="line"> <span class="string">'n_estimators'</span>:range(<span class="number">10</span>,<span class="number">50</span>,<span class="number">10</span>),</span><br><span class="line"> <span class="string">'max_depth'</span>:range(<span class="number">1</span>,<span class="number">12</span>,<span class="number">3</span>),</span><br><span class="line"><span class="string">'max_features'</span>:range(<span class="number">1</span>,<span class="number">12</span>,<span class="number">3</span>)&#125;</span><br><span class="line">clf = GridSearchCV(gbdt, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">gbdt_pre=clf.predict(test_feature)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:gbdt_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'learning_rate'</span>: <span class="number">0.1</span>, <span class="string">'max_depth'</span>: <span class="number">4</span>, <span class="string">'max_features'</span>: <span class="number">4</span>, <span class="string">'n_estimators'</span>: <span class="number">30</span>&#125; <span class="number">0.8260381593714927</span></span><br></pre></td></tr></table></figure>
+<p>提交成绩后得分：0.78468</p>
+</li>
+<li><p>Xgboost</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> xgboost.sklearn <span class="keyword">import</span> XGBClassifier</span><br><span class="line">xgb=XGBClassifier()</span><br><span class="line">parameters = &#123;<span class="string">'learning_rate'</span>:[<span class="number">0.0001</span>,<span class="number">0.001</span>,<span class="number">0.1</span>],</span><br><span class="line"> <span class="string">'n_estimators'</span>:range(<span class="number">10</span>,<span class="number">50</span>,<span class="number">10</span>),</span><br><span class="line"> <span class="string">'max_depth'</span>:range(<span class="number">1</span>,<span class="number">10</span>,<span class="number">3</span>),</span><br><span class="line"> <span class="string">'min_child_weight'</span>:[<span class="number">0.0001</span>,<span class="number">0.001</span>,<span class="number">.01</span>],</span><br><span class="line"> <span class="string">'gamma'</span>:[<span class="number">0.1</span>,<span class="number">1</span>,<span class="number">10</span>],</span><br><span class="line"><span class="string">'max_features'</span>:range(<span class="number">1</span>,<span class="number">12</span>,<span class="number">3</span>),</span><br><span class="line"> <span class="string">'subsample'</span>:[<span class="number">0.4</span>,<span class="number">0.8</span>,<span class="number">1</span>],</span><br><span class="line"> <span class="string">'colsample_bytree'</span>:[<span class="number">0.4</span>,<span class="number">0.8</span>,<span class="number">1</span>],&#125;</span><br><span class="line">clf = GridSearchCV(xgb, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">xgb_pre=clf.predict(test_feature)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:xgb_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'colsample_bytree'</span>: <span class="number">0.4</span>, <span class="string">'gamma'</span>: <span class="number">0.1</span>, <span class="string">'learning_rate'</span>: <span class="number">0.1</span>, <span class="string">'max_depth'</span>: <span class="number">4</span>, <span class="string">'max_features'</span>: <span class="number">1</span>, <span class="string">'min_child_weight'</span>: <span class="number">0.0001</span>, <span class="string">'n_estimators'</span>: <span class="number">40</span>, <span class="string">'subsample'</span>: <span class="number">0.8</span>&#125; <span class="number">0.8305274971941639</span></span><br></pre></td></tr></table></figure>
+<p>提交成绩后得分：0.77511</p>
+</li>
+<li><p>多层网络模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.neural_network <span class="keyword">import</span> MLPClassifier</span><br><span class="line">MLP=MLPClassifier()</span><br><span class="line">parameters = &#123;<span class="string">'hidden_layer_sizes'</span>:[<span class="number">200</span>],</span><br><span class="line">              <span class="string">'activation'</span>:[<span class="string">'logistic'</span>,<span class="string">'tanh'</span>, <span class="string">'relu'</span>], </span><br><span class="line">              <span class="string">'solver'</span>:[<span class="string">'adam'</span>],</span><br><span class="line">              <span class="string">'alpha'</span>:[<span class="number">.01</span>,<span class="number">.1</span>,<span class="number">1</span>],</span><br><span class="line">              <span class="string">'batch_size'</span>:[<span class="number">16</span>,<span class="number">32</span>],</span><br><span class="line">              <span class="string">'learning_rate'</span>:[<span class="string">'invscaling'</span>],</span><br><span class="line">              <span class="string">'learning_rate_init'</span>:[<span class="number">.0001</span>,<span class="number">.001</span>],</span><br><span class="line">              <span class="string">'power_t'</span>:[<span class="number">0.5</span>,<span class="number">0.4</span>],</span><br><span class="line">              <span class="string">'max_iter'</span>:[<span class="number">500</span>,<span class="number">200</span>],</span><br><span class="line">              <span class="string">'shuffle'</span>:[<span class="keyword">True</span>]</span><br><span class="line">              &#125;</span><br><span class="line">clf = GridSearchCV(MLP, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">MLP_pre=clf.predict(test_feature)</span><br><span class="line">test_passengerId=test_data[<span class="string">'PassengerId'</span>]</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:MLP_pre&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'activation'</span>: <span class="string">'relu'</span>, <span class="string">'alpha'</span>: <span class="number">0.1</span>, <span class="string">'batch_size'</span>: <span class="number">32</span>, <span class="string">'hidden_layer_sizes'</span>: <span class="number">200</span>, <span class="string">'learning_rate'</span>: <span class="string">'invscaling'</span>, <span class="string">'learning_rate_init'</span>: <span class="number">0.001</span>, <span class="string">'max_iter'</span>: <span class="number">500</span>, <span class="string">'power_t'</span>: <span class="number">0.4</span>, <span class="string">'shuffle'</span>: <span class="keyword">True</span>, <span class="string">'solver'</span>: <span class="string">'adam'</span>&#125; <span class="number">0.8260381593714927</span></span><br></pre></td></tr></table></figure>
+<p>最终得分：0.77511</p>
+</li>
+<li><p>投票</p>
+<p><strong>全部参与</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sum_ways=MLP_pre+lr_pre+tree_pre+svm_pre+xgb_pre+rand_tree_pre+gbdt_pre+NB_pre+neigh_pre</span><br><span class="line">vote=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> sum_ways:</span><br><span class="line">    <span class="keyword">if</span> i&lt;<span class="number">5</span>:</span><br><span class="line">        vote.append(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        vote.append(<span class="number">1</span>)</span><br><span class="line">df=pd.DataFrame(&#123;<span class="string">'PassengerId'</span>:test_passengerId,<span class="string">'Survived'</span>:vote&#125;)</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<p>最终得分：0.77511</p>
+</li>
+</ol>
+<p>   初步的模型调参下，随机森林最好。方法虽然很多，但是数据特征才是最关键的，希望日后能多多积累相关的经验</p>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
