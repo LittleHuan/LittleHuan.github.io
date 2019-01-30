@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    
+
+    <title>
+      kaggle之旧金山犯罪回归问题 | LiuHuan 
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    
+      <meta name="author" content="John Doe">
+    
+    
+
+    <meta name="description" content="该数据集是旧金山犯罪记录集合，通过训练train集合中的所有数据，从而预测test集合中每类犯罪的概率。 数据分析与清洗 读取数据  读取数据，并对train_data进行观察。 123import pandas as pdtrain_data=pd.read_csv(&apos;train.csv&apos;)test_data=pd.read_csv(&apos;test.csv&apos;)  图中Category指的是案件类别，">
+<meta name="keywords" content="回归">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kaggle之旧金山犯罪回归问题 | LiuHuan">
+<meta property="og:url" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/index.html">
+<meta property="og:site_name" content="LiuHuan">
+<meta property="og:description" content="该数据集是旧金山犯罪记录集合，通过训练train集合中的所有数据，从而预测test集合中每类犯罪的概率。 数据分析与清洗 读取数据  读取数据，并对train_data进行观察。 123import pandas as pdtrain_data=pd.read_csv(&apos;train.csv&apos;)test_data=pd.read_csv(&apos;test.csv&apos;)  图中Category指的是案件类别，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/train_table.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/crime.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/drop_train.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/year.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/year_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/month.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/month_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/date.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/date_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/time.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/time_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/DayofWeek_all.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/DayofWeek_all.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/PdDistrict.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/PdDistrict_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/fault.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/map.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/旧金山.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/map_item.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/change_map.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/final_train.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/final_test.png">
+<meta property="og:updated_time" content="2019-01-30T06:56:20.621Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kaggle之旧金山犯罪回归问题 | LiuHuan">
+<meta name="twitter:description" content="该数据集是旧金山犯罪记录集合，通过训练train集合中的所有数据，从而预测test集合中每类犯罪的概率。 数据分析与清洗 读取数据  读取数据，并对train_data进行观察。 123import pandas as pdtrain_data=pd.read_csv(&apos;train.csv&apos;)test_data=pd.read_csv(&apos;test.csv&apos;)  图中Category指的是案件类别，">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/21/kaggle之旧金山犯罪回归问题/train_table.png">
+    
+    
+    
+      <link rel="icon" type="image/x-icon" href="/favicon.png">
+    
+    <link rel="stylesheet" href="/css/uno.css">
+    <link rel="stylesheet" href="/css/highlight.css">
+    <link rel="stylesheet" href="/css/archive.css">
+    <link rel="stylesheet" href="/css/china-social-icon.css">
+
+</head>
+<body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="icon icon-list btn-mobile-menu__icon"></i>
+        <i class="icon icon-x-circle btn-mobile-close__icon hidden"></i>
+    </span>
+
+    
+
+<header class="panel-cover panel-cover--collapsed">
+
+
+  <div class="panel-main">
+
+  
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        
+
+        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">LiuHuan</a></h1>
+        <hr class="panel-cover__divider">
+
+        
+        <p class="panel-cover__description">
+          个人主页
+        </p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary">
+        
+
+        <div class="navigation-wrapper">
+
+          <nav class="cover-navigation cover-navigation--primary">
+            <ul class="navigation">
+
+              
+                
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">首页</a></li>
+              
+                
+                <li class="navigation__item"><a href="/about" title="" class="">关于</a></li>
+              
+                
+                <li class="navigation__item"><a href="/archive" title="" class="">归档</a></li>
+              
+
+            </ul>
+          </nav>
+
+          <!-- ----------------------------
+To add a new social icon simply duplicate one of the list items from below
+and change the class in the <i> tag to match the desired social network
+and then add your link to the <a>. Here is a full list of social network
+classes that you can use:
+
+    icon-social-500px
+    icon-social-behance
+    icon-social-delicious
+    icon-social-designer-news
+    icon-social-deviant-art
+    icon-social-digg
+    icon-social-dribbble
+    icon-social-facebook
+    icon-social-flickr
+    icon-social-forrst
+    icon-social-foursquare
+    icon-social-github
+    icon-social-google-plus
+    icon-social-hi5
+    icon-social-instagram
+    icon-social-lastfm
+    icon-social-linkedin
+    icon-social-medium
+    icon-social-myspace
+    icon-social-path
+    icon-social-pinterest
+    icon-social-rdio
+    icon-social-reddit
+    icon-social-skype
+    icon-social-spotify
+    icon-social-stack-overflow
+    icon-social-steam
+    icon-social-stumbleupon
+    icon-social-treehouse
+    icon-social-tumblr
+    icon-social-twitter
+    icon-social-vimeo
+    icon-social-xbox
+    icon-social-yelp
+    icon-social-youtube
+    icon-social-zerply
+    icon-mail
+
+-------------------------------->
+
+<!-- add social info here -->
+
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="panel-cover--overlay"></div>
+  </div>
+</header>
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner entry">
+            
+
+<article class="post-container post-container--single">
+
+  <header class="post-header">
+    
+    <h1 class="post-title">kaggle之旧金山犯罪回归问题</h1>
+
+    
+
+    <div class="post-meta">
+      <time datetime="2019-01-21" class="post-meta__date date">2019-01-21</time> 
+
+      <span class="post-meta__tags tags">
+
+          
+
+          
+             &#8226; 标签:
+            <font class="tags">
+              <a class="tags-link" href="/tags/回归/">回归</a>
+            </font>
+          
+
+      </span>
+    </div>
+    
+    
+
+  </header>
+
+  <section id="post-content" class="article-content post">
+    <p>该数据集是旧金山犯罪记录集合，通过训练train集合中的所有数据，从而预测test集合中每类犯罪的概率。</p>
+<h3 id="数据分析与清洗"><a href="#数据分析与清洗" class="headerlink" title="数据分析与清洗"></a>数据分析与清洗</h3><ul>
+<li>读取数据</li>
+</ul>
+<p>读取数据，并对train_data进行观察。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">train_data=pd.read_csv(<span class="string">'train.csv'</span>)</span><br><span class="line">test_data=pd.read_csv(<span class="string">'test.csv'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="train_table.png" alt=""></p>
+<p>图中Category指的是案件类别，一共有纵火、斗殴、空头支票、贿赂、盗窃、扰乱治安的行为、酒驾等39种罪名，最终的目标是预测每一种犯罪的可能性，因此训练的label是一个39长向量。</p>
+<p>将每种类型的犯罪进行统计，则有</p>
+<p><img src="crime.png" alt=""></p>
+<p>为了便于后续的分析，我们将案件按照数量进行统计分为5类：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">New_Category=train_data.Category.map(<span class="keyword">lambda</span> x:<span class="string">'ELSE'</span> <span class="keyword">if</span> ((x!=<span class="string">'LARCENY/THEFT'</span>)<span class="keyword">and</span>(x!=<span class="string">'OTHER OFFENSES'</span>)<span class="keyword">and</span>(x!=<span class="string">'NON-CRIMINAL'</span>)<span class="keyword">and</span>(x!=<span class="string">'ASSAULT'</span>)) <span class="keyword">else</span> x )</span><br><span class="line">train_data[<span class="string">'New_Category'</span>] = New_Category  <span class="comment">#并将其加入到train_data特征之中</span></span><br></pre></td></tr></table></figure>
+<p>并且每一类的数量统计为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LARCENY/THEFT     <span class="number">174900</span></span><br><span class="line">OTHER OFFENSES    <span class="number">126182</span></span><br><span class="line">NON-CRIMINAL       <span class="number">92304</span></span><br><span class="line">ASSAULT            <span class="number">76876</span></span><br><span class="line">ELSE              <span class="number">407787</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>打印数据信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">train_data.info()</span><br><span class="line">test_data.info()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">878049</span> entries, <span class="number">0</span> to <span class="number">878048</span></span><br><span class="line">Data columns (total <span class="number">9</span> columns):</span><br><span class="line">Dates         <span class="number">878049</span> non-null object</span><br><span class="line">Category      <span class="number">878049</span> non-null object</span><br><span class="line">Descript      <span class="number">878049</span> non-null object <span class="comment">##</span></span><br><span class="line">DayOfWeek     <span class="number">878049</span> non-null object</span><br><span class="line">PdDistrict    <span class="number">878049</span> non-null object</span><br><span class="line">Resolution    <span class="number">878049</span> non-null object <span class="comment">##</span></span><br><span class="line">Address       <span class="number">878049</span> non-null object</span><br><span class="line">X             <span class="number">878049</span> non-null float64</span><br><span class="line">Y             <span class="number">878049</span> non-null float64</span><br><span class="line">dtypes: float64(<span class="number">2</span>), object(<span class="number">7</span>)</span><br><span class="line">memory usage: <span class="number">60.3</span>+ MB</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">pandas</span>.<span class="title">core</span>.<span class="title">frame</span>.<span class="title">DataFrame</span>'&gt;</span></span><br><span class="line"><span class="class"><span class="title">RangeIndex</span>:</span> <span class="number">884262</span> entries, <span class="number">0</span> to <span class="number">884261</span></span><br><span class="line">Data columns (total <span class="number">7</span> columns):</span><br><span class="line">Id            <span class="number">884262</span> non-null int64</span><br><span class="line">Dates         <span class="number">884262</span> non-null object</span><br><span class="line">DayOfWeek     <span class="number">884262</span> non-null object</span><br><span class="line">PdDistrict    <span class="number">884262</span> non-null object</span><br><span class="line">Address       <span class="number">884262</span> non-null object</span><br><span class="line">X             <span class="number">884262</span> non-null float64</span><br><span class="line">Y             <span class="number">884262</span> non-null float64</span><br><span class="line">dtypes: float64(<span class="number">2</span>), int64(<span class="number">1</span>), object(<span class="number">4</span>)</span><br><span class="line">memory usage: <span class="number">47.2</span>+ MB</span><br></pre></td></tr></table></figure>
+<p>发现数据中没有缺失值，但是发现train_data中有一些属性在test_data中并不存在，因此在训练的时候并不需要这些特征，因此将其删掉</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data.drop([<span class="string">'Descript'</span>,<span class="string">'Resolution'</span>],axis=<span class="number">1</span>).head(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="drop_train.png" alt=""></p>
+</li>
+<li><p>特征分析</p>
+<p>好了，接下来我们对每个特征进行分析：</p>
+<p><strong>Dates</strong></p>
+<p>该特征格式为’yyyy-M-d H:mm:ss’这里需要将其分割，按照不同的时间维度去进行分析。由Dates格式固定，因此我们就用其所在的位置去划分：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Year=train_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">Month=train_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">5</span>:<span class="number">7</span>])</span><br><span class="line">Date=train_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">8</span>:<span class="number">10</span>])</span><br><span class="line">Hour=train_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">11</span>:<span class="number">13</span>])</span><br></pre></td></tr></table></figure>
+<p>并将每个维度进行划分：</p>
+<p><em>按照年份</em>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">Year.value_counts().sort_index().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by year'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="year.png" alt=""></p>
+<p>从案件总数来说，03~14年案件数量由高到低再到高，再看看几个主要案件类型的变化，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">5</span>))</span><br><span class="line">sns.countplot(x=Year,hue=New_Category)</span><br></pre></td></tr></table></figure>
+<p><img src="year_item.png" alt=""></p>
+<p>几个主要案件类型也在发生变化，例如偷窃案(绿色)的案件在12~14年增多。</p>
+<p><em>按照月份</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Month.value_counts().sort_index().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by month'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="month.png" alt=""></p>
+<p>每年几个月案件数量都会有起伏，大概每半年有一个起伏周期。下图中，几个主要案件类型分布变化不明显</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">5</span>))</span><br><span class="line">sns.countplot(x=Month,hue=New_Category)</span><br></pre></td></tr></table></figure>
+<p><img src="month_item.png" alt=""></p>
+<p><em>按照日期</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Month.value_counts().sort_index().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by month'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="date.png" alt=""></p>
+<p>案件总数会随每月几号进行起伏，其中1号最多，31号最少（因为有的月份并没有31号）,下图中，几个主要案件类型分布变化不明显</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">5</span>))</span><br><span class="line">sns.countplot(x=Month,hue=New_Category)</span><br></pre></td></tr></table></figure>
+<p><img src="date_item.png" alt=""></p>
+<p><em>按照时间</em></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hour.value_counts().sort_index().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by hour'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="time.png" alt=""></p>
+<p>案件总量会随着时间的变化而变化，其中凌晨发生案件的数量较少，白天后急剧增加，在12点和19点到达最高（都是饭点）.</p>
+<p>下图总，几个主要案件类型分布发生了明显的变化，尤其是绿色和黄色的条，可见一天中的时间点对于不同类型案件也产生了很大的影响。</p>
+<p><img src="time_item.png" alt=""></p>
+<p>好了，对于Dates特征的分析到此为止，可以看到案件总会随着不同的Dates变化而变化，其具体案件类型的分布也会随之变化。</p>
+<p><strong>DayofWeek</strong></p>
+<p>一周中不同的时间对于案件的影响</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">"DayOfWeek"</span>].value_counts().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by DayofWeek'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="DayofWeek_all.png" alt=""></p>
+<p>图中可以看出，案件随着不同的WeekofDay而变化，其中具体的类型也会受到其影响，如图所示</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">5</span>))</span><br><span class="line">sns.countplot(x=train_data[<span class="string">"DayOfWeek"</span>], hue=New_Category)</span><br></pre></td></tr></table></figure>
+<p><img src="DayofWeek_all.png" alt=""></p>
+<p><strong>PdDistrict</strong></p>
+<p>警局部门，需进行观察一下</p>
+<p><img src="PdDistrict.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">"PdDistrict"</span>].value_counts().plot(kind=<span class="string">'bar'</span>, title=<span class="string">'listed crime by PdDistrict'</span>)</span><br></pre></td></tr></table></figure>
+<p>可以看到从总量来说，不同警局对于案件的受理有着明显的不同，具体到案件类型上来说，如下图所示有着明显的不同，例如Northern,Southern,Central三个警局对于LARCENY/THEFT比重较大，Ingleside和Bayview对于Assault案件比重较大，该属性中的各个类别不同的案件种类明显有不同的差距，该特征较强。</p>
+<p><img src="PdDistrict_item.png" alt=""></p>
+<p><strong>Address</strong></p>
+<p>对地址信息进行统计，并画图观察</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Address_train=train_data[<span class="string">"Address"</span>].value_counts()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">800 Block of BRYANT ST                  26533</span><br><span class="line">800 Block of MARKET ST                   6581</span><br><span class="line">2000 Block of MISSION ST                 5097</span><br><span class="line">1000 Block of POTRERO AV                 4063</span><br><span class="line">900 Block of MARKET ST                   3251</span><br><span class="line">0 Block of TURK ST                       3228</span><br><span class="line">0 Block of 6TH ST                        2884</span><br><span class="line">300 Block of ELLIS ST                    2703</span><br><span class="line">400 Block of ELLIS ST                    2590</span><br><span class="line">16TH ST / MISSION ST                     2504</span><br><span class="line">1000 Block of MARKET ST                  2489</span><br><span class="line">1100 Block of MARKET ST                  2319</span><br><span class="line">                                        ...  </span><br><span class="line">1400 Block of 4TH ST                        1</span><br><span class="line">CABRILLO ST / 40TH AV                       1</span><br><span class="line">5TH ST / CYRIL MAGNIN STORTH ST             1</span><br><span class="line">BRADFORD ST / TOMPKINS AV                   1</span><br><span class="line">1700 Block of PACHECO ST                    1</span><br><span class="line">DONNER AV / BAY SHORE BL                    1</span><br><span class="line">SATURN ST / LOWER TR                        1</span><br><span class="line">OFARRELL ST / ANZA ST                       1</span><br><span class="line">GEARY BL / JORDAN AV                        1</span><br><span class="line">0 Block of SAN FELIPE AV                    1</span><br><span class="line">Name: Address, Length: 23228, dtype: int64</span><br></pre></td></tr></table></figure>
+<p>发现种类繁多，并且太过于具体，这里我们可以将地址分为案件高发地区，普通地区，低发地区等等。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Address_test=test_data[<span class="string">"Address"</span>].value_counts()</span><br><span class="line">ret_list = [item <span class="keyword">for</span> item <span class="keyword">in</span> list(Address_test.axes[<span class="number">0</span>]) <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> list(Address_train.axes[<span class="number">0</span>])]</span><br><span class="line">len(ret_list)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1549</span><br></pre></td></tr></table></figure>
+<p>但是在test_data中存在1549条不存在于train_data中，因此我们可以将Address属性进行删除。</p>
+<p><strong>X、Y</strong></p>
+<p>这里的x和y是坐标的显示，我们可以先通过散点图进行画图，观察发现有异常值</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">data_x=train_data[<span class="string">'X'</span>].values</span><br><span class="line">data_y=train_data[<span class="string">'Y'</span>].values</span><br><span class="line">plt.scatter(data_x,data_y)</span><br></pre></td></tr></table></figure>
+<p><img src="fault.png" alt=""></p>
+<p>因此需要去除异常值来观察</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">plt.figure(figsize=(<span class="number">10</span>,<span class="number">10</span>))</span><br><span class="line">data_x=train_data[<span class="string">'X'</span>].values</span><br><span class="line">data_y=train_data[<span class="string">'Y'</span>].values</span><br><span class="line">plt.scatter(data_x,data_y)</span><br><span class="line">plt.scatter([x <span class="keyword">for</span> x <span class="keyword">in</span> data_x <span class="keyword">if</span> x &lt;<span class="number">-122</span>],[y <span class="keyword">for</span> y <span class="keyword">in</span> data_y <span class="keyword">if</span> y &lt;<span class="number">70</span>],s=<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="map.png" alt=""></p>
+<p><img src="旧金山.png" alt=""></p>
+<p>可以看到在人口较多的地方犯罪数量很多，具体到每种犯罪类型上</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'New_Category'</span>]=New_Category</span><br><span class="line">New_Category_count=train_data[<span class="string">'New_Category'</span>].value_counts()</span><br><span class="line">label=list(New_Category_count.axes[<span class="number">0</span>])</span><br><span class="line">count=<span class="number">1</span></span><br><span class="line">colors = [<span class="string">'b'</span>,<span class="string">'g'</span>,<span class="string">'r'</span>,<span class="string">'orange'</span>]</span><br><span class="line">plt.figure(figsize=(<span class="number">15</span>,<span class="number">15</span>))</span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> label[<span class="number">1</span>:]:</span><br><span class="line">    plt.subplot(<span class="number">2</span>,<span class="number">2</span>,count)</span><br><span class="line">    train_data_x=train_data[train_data[<span class="string">'New_Category'</span>]==item][<span class="string">'X'</span>]</span><br><span class="line">    train_data_y=train_data[train_data[<span class="string">'New_Category'</span>]==item][<span class="string">'Y'</span>]</span><br><span class="line">    plt.scatter([x <span class="keyword">for</span> x <span class="keyword">in</span> train_data_x <span class="keyword">if</span> x &lt;<span class="number">-122</span>],[y <span class="keyword">for</span> y <span class="keyword">in</span> train_data_y <span class="keyword">if</span> y &lt;<span class="number">70</span>],label=item,s=<span class="number">0.5</span>,c=colors[count<span class="number">-1</span>])</span><br><span class="line">    plt.legend()</span><br><span class="line">    count+=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p><img src="map_item.png" alt=""></p>
+<p>发现不同类型的犯罪分布有较小的差异，此外，我们应该对train_data的异常值进行处理，这里我们发现Address属性与X、Y存在一定的关系，我们可以通过地址的字符串去模糊的反推出异常的X、Y坐标。首先将数据分成两部分，一部分是有异常值，另一部是没有异常值，用没有异常值中的坐标去替换异常坐标值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">train_data_error=train_data[train_data[<span class="string">'Y'</span>]&gt;<span class="number">70</span>]</span><br><span class="line">train_data_right=train_data[train_data[<span class="string">'Y'</span>]&lt;<span class="number">70</span>] <span class="comment">#数据分开</span></span><br><span class="line"><span class="keyword">for</span> item1 <span class="keyword">in</span> train_data_error[<span class="string">'Address'</span>]:</span><br><span class="line">    new_x=np.mean(train_data_right[<span class="string">'X'</span>].values)</span><br><span class="line">    new_y=np.mean(train_data_right[<span class="string">'Y'</span>].values)</span><br><span class="line">    temp1=item1.split(<span class="string">'/'</span>)</span><br><span class="line">    temp1[<span class="number">0</span>]=temp1[<span class="number">0</span>].strip()</span><br><span class="line">    <span class="keyword">for</span> item2 <span class="keyword">in</span> train_data_right[<span class="string">'Address'</span>]:</span><br><span class="line">        temp2=item2.split(<span class="string">'/'</span>)</span><br><span class="line">        temp2[<span class="number">0</span>]=temp2[<span class="number">0</span>].strip()</span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">2</span> <span class="keyword">and</span> len(temp2)==<span class="number">2</span>:        </span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">0</span>]==temp2[<span class="number">1</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">1</span>]) ):</span><br><span class="line">                new_x=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">2</span> <span class="keyword">and</span> len(temp2)==<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">0</span>]) ):              </span><br><span class="line">                new_x=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">1</span> <span class="keyword">and</span> len(temp2)==<span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">0</span>]==temp2[<span class="number">1</span>]) ):</span><br><span class="line">                new_x=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=train_data_right[train_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    count+=<span class="number">1</span></span><br><span class="line">    train_data_error.loc[train_data_error[<span class="string">'Address'</span>]==item1,<span class="string">'X'</span>]=new_x</span><br><span class="line">    train_data_error.loc[train_data_error[<span class="string">'Address'</span>]==item1,<span class="string">'Y'</span>]=new_y</span><br><span class="line">train_data=pd.concat([train_data_right,train_data_error])  <span class="comment">#数据合并</span></span><br><span class="line">train_data.sort_index()</span><br></pre></td></tr></table></figure>
+<p>然后再将数据画图，发现并无异常值</p>
+<p><img src="change_map.png" alt=""></p>
+<p>同理，对于test_data集合也做该操作，修改过后X、Y属性并无异常值。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">test_data_error=test_data[test_data[<span class="string">'Y'</span>]&gt;<span class="number">70</span>]</span><br><span class="line">test_data_right=test_data[test_data[<span class="string">'Y'</span>]&lt;<span class="number">70</span>] <span class="comment">#数据分开</span></span><br><span class="line"><span class="keyword">for</span> item1 <span class="keyword">in</span> test_data_error[<span class="string">'Address'</span>]:</span><br><span class="line">    new_x=np.mean(test_data_right[<span class="string">'X'</span>].values)</span><br><span class="line">    new_y=np.mean(test_data_right[<span class="string">'Y'</span>].values)</span><br><span class="line">    temp1=item1.split(<span class="string">'/'</span>)</span><br><span class="line">    temp1[<span class="number">0</span>]=temp1[<span class="number">0</span>].strip()</span><br><span class="line">    <span class="keyword">for</span> item2 <span class="keyword">in</span> test_data_right[<span class="string">'Address'</span>]:</span><br><span class="line">        temp2=item2.split(<span class="string">'/'</span>)</span><br><span class="line">        temp2[<span class="number">0</span>]=temp2[<span class="number">0</span>].strip()</span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">2</span> <span class="keyword">and</span> len(temp2)==<span class="number">2</span>:        </span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">0</span>]==temp2[<span class="number">1</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">1</span>]) ):</span><br><span class="line">                new_x=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">2</span> <span class="keyword">and</span> len(temp2)==<span class="number">1</span>:</span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">1</span>]==temp2[<span class="number">0</span>]) ):              </span><br><span class="line">                new_x=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">        <span class="keyword">if</span> len(temp1)==<span class="number">1</span> <span class="keyword">and</span> len(temp2)==<span class="number">2</span>:</span><br><span class="line">            <span class="keyword">if</span> ( (temp1[<span class="number">0</span>]==temp2[<span class="number">0</span>]) <span class="keyword">or</span> (temp1[<span class="number">0</span>]==temp2[<span class="number">1</span>]) ):</span><br><span class="line">                new_x=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'X'</span>].values[<span class="number">0</span>]</span><br><span class="line">                new_y=test_data_right[test_data_right[<span class="string">'Address'</span>]==item2][<span class="string">'Y'</span>].values[<span class="number">0</span>]</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">    count+=<span class="number">1</span></span><br><span class="line">    test_data_error.loc[test_data_error[<span class="string">'Address'</span>]==item1,<span class="string">'X'</span>]=new_x</span><br><span class="line">    test_data_error.loc[test_data_error[<span class="string">'Address'</span>]==item1,<span class="string">'Y'</span>]=new_y</span><br><span class="line">test_data=pd.concat([test_data_right,test_data_error])  <span class="comment">#数据合并</span></span><br><span class="line">test_data.sort_index()</span><br></pre></td></tr></table></figure>
+<p>接下来对train_data和test_data的X、Y进行归一化操作。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">max_x=np.max(train_data.X)</span><br><span class="line">min_x=np.min(train_data.X)</span><br><span class="line">train_data[<span class="string">'X'</span>]=train_data.X.map(<span class="keyword">lambda</span> x:(x - min_x) /(max_x-min_x))</span><br><span class="line">max_y=np.max(train_data.Y)</span><br><span class="line">min_y=np.min(train_data.Y)</span><br><span class="line">train_data[<span class="string">'Y'</span>]=train_data.Y.map(<span class="keyword">lambda</span> y:(y - min_y) /(max_y-min_y))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">max_x=np.max(test_data.X)</span><br><span class="line">min_x=np.min(test_data.X)</span><br><span class="line">train_data[<span class="string">'X'</span>]=test_data.X.map(<span class="keyword">lambda</span> x:(x - min_x) /(max_x-min_x))</span><br><span class="line">max_y=np.max(test_data.Y)</span><br><span class="line">min_y=np.min(test_data.Y)</span><br><span class="line">test_data[<span class="string">'Y'</span>]=test_data.Y.map(<span class="keyword">lambda</span> y:(y - min_y) /(max_y-min_y))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>feature的添加和修改与one-hot</p>
+<p>添加一些时间分割后的列，去除多余的列</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">train_data[<span class="string">'Year'</span>]=Year</span><br><span class="line">train_data[<span class="string">'Month'</span>]=Month</span><br><span class="line">train_data[<span class="string">'Date'</span>]=Date</span><br><span class="line">train_data[<span class="string">'Hour'</span>]=Hour</span><br><span class="line">train_data=train_data.drop([<span class="string">'Dates'</span>,<span class="string">'Address'</span>,<span class="string">'New_Category'</span>,<span class="string">'Resolution'</span>,<span class="string">'Descript'</span>],axis=<span class="number">1</span>)</span><br><span class="line">train_data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="final_train.png" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Year_test=test_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">0</span>:<span class="number">4</span>])</span><br><span class="line">Month_test=test_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">5</span>:<span class="number">7</span>])</span><br><span class="line">Date_test=test_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">8</span>:<span class="number">10</span>])</span><br><span class="line">Hour_test=test_data.Dates.map(<span class="keyword">lambda</span> x:x[<span class="number">11</span>:<span class="number">13</span>])</span><br><span class="line">test_data[<span class="string">'Year'</span>]=Year_test</span><br><span class="line">test_data[<span class="string">'Month'</span>]=Month_test</span><br><span class="line">test_data[<span class="string">'Date'</span>]=Date_test</span><br><span class="line">test_data[<span class="string">'Hour'</span>]=Hour_test</span><br><span class="line">test_data=test_data.drop([<span class="string">'Id'</span>,<span class="string">'Dates'</span>,<span class="string">'Address'</span>],axis=<span class="number">1</span>)</span><br><span class="line">test_data.head()</span><br></pre></td></tr></table></figure>
+<p><img src="final_test.png" alt=""></p>
+<p>进行one-hot编码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">train_label=tpd.get_dummies(train_data.Category)</span><br><span class="line">train_feature=pd.get_dummies(train_data.drop(<span class="string">'Category'</span>,axis=<span class="number">1</span>))</span><br><span class="line">test_feature=pd.get_dummies(test_data)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="模型构建与参数调整"><a href="#模型构建与参数调整" class="headerlink" title="模型构建与参数调整"></a>模型构建与参数调整</h3><p>通过决策树回归模型简答的调整了参数，代码如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeRegressor</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> GridSearchCV</span><br><span class="line">parameters = &#123;<span class="string">'max_depth'</span>:[<span class="number">10</span>,<span class="number">50</span>], <span class="string">'max_features'</span>:[<span class="number">10</span>,<span class="number">50</span>]</span><br><span class="line">              &#125;</span><br><span class="line">regressor = DecisionTreeRegressor()</span><br><span class="line">clf = GridSearchCV(regressor, parameters, n_jobs=<span class="number">-1</span>)</span><br><span class="line">clf.fit(train_feature,train_label)</span><br><span class="line"><span class="keyword">print</span> (clf.best_params_,clf.best_score_)</span><br><span class="line">TreeReg_pre=clf.predict(test_feature)</span><br><span class="line">test_data=pd.read_csv(<span class="string">'test.csv'</span>)</span><br><span class="line">test_Id=test_data[<span class="string">'Id'</span>]</span><br><span class="line">df=pd.DataFrame(TreeReg_pre,columns=train_label.columns)</span><br><span class="line">df[<span class="string">'Id'</span>]=test_Id</span><br><span class="line">df.to_csv(<span class="string">"submission.csv"</span>,index=<span class="keyword">False</span>,sep=<span class="string">','</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">'max_depth'</span>: <span class="number">10</span>, <span class="string">'max_features'</span>: <span class="number">50</span>&#125; <span class="number">0.014445116219467402</span></span><br></pre></td></tr></table></figure>
+
+  </section>
+
+  <section class="post-comments">
+
+    <!-- 将评论系统（例如Disqus、多说、友言、畅言等）提供的代码片段粘贴在这里 -->
+    
+</section>
+
+
+</article>
+
+
+            <footer class="footer">
+
+    <span class="footer__copyright">&copy; 2014-2015. | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/someus/huno">Huno</a></span>
+    
+</footer>
+        </div>
+    </div>
+
+    <!-- js files -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="/js/scale.fix.js"></script>
+    
+
+    
+
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+
+    
+
+    <script src="/js/awesome-toc.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $.awesome_toc({
+                overlay: true,
+                contentId: "post-content",
+            });
+        });
+    </script>
+
+
+    
+    
+    <!--kill ie6 -->
+<!--[if IE 6]>
+  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
+<![endif]-->
+
+</body>
+</html>
