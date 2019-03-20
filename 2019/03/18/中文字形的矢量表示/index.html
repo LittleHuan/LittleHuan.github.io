@@ -16,13 +16,13 @@
     
     
 
-    <meta name="description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. ###摘要 ​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还">
+    <meta name="description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. 摘要​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还没找到。">
 <meta name="keywords" content="论文笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="中文字形的矢量表示 | LiuHuan">
 <meta property="og:url" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/index.html">
 <meta property="og:site_name" content="LiuHuan">
-<meta property="og:description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. ###摘要 ​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还">
+<meta property="og:description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. 摘要​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还没找到。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/日.svg">
 <meta property="og:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/象.png">
@@ -34,10 +34,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/图4.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/表1.png">
 <meta property="og:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/表2.png">
-<meta property="og:updated_time" content="2019-03-20T04:11:31.287Z">
+<meta property="og:updated_time" content="2019-03-20T04:17:29.649Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="中文字形的矢量表示 | LiuHuan">
-<meta name="twitter:description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. ###摘要 ​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还">
+<meta name="twitter:description" content="论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect. 摘要​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还没找到。">
 <meta name="twitter:image" content="http://yoursite.com/2019/03/18/中文字形的矢量表示/日.svg">
     
     
@@ -194,8 +194,7 @@ classes that you can use:
 
   <section id="post-content" class="article-content post">
     <p>论文翻译    Glyce:Glyph-vector for Chainese Character Representations.   Yuxian Meng,ect.</p>
-<p>###摘要</p>
-<p>​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还没找到。</p>
+<h3 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h3><p>​    直观来说，在做像中文这样起源于象形字语言的NLP的任务时应该更多的从字形方面去挖掘信息。然而由于现在在象形文字上缺乏足够的证据，缺乏具有泛化能力的标准的计算机视觉模型，因此一个有效的利用字形信息的方法暂时还没找到。</p>
 <p>​    在这篇论文里，我们推出了Glyce去填补这方面的空缺——一个针对于中国字符的字形向量。我们做了以下三个方面的创新：（1）我们使用了历史上的中文汉字（如铭文，篆书，繁体字）来丰富象形字。（2）我们使用CNN架构去对中文进行加工处理。（3）在多任务学习系统中，我们使用图像分类作为辅助任务，以提高模型的泛化性能。</p>
 <p>​    首先我们证明了基于字形的模型能够在广泛的NLP任务中始终优于word/char-ID的模型。并在13项中文NLP上达到更好的性能。包括（1）字级语言建模；（2）词语级语言建模；（3）中文分词；（4）名称实体识别；（5）词性标注；（6）相关性分析；（7）语义角色标记；（8）句子语义相似性；（9）句子意图识别；（10）汉英机器翻译；（11）感情分析；（12）文档分类；（13）章篇分析；</p>
 <h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>​    中国字符是表意文字符，可以被分解成更小的部分：象形字，图像描绘的对象，例如 “亻”表示人，“日”表示提样，“艹”表示植物，对于形声字，通常用于发音“青”表示晴读青。早在公元前2世纪，《说文解字》就用图形部分来表征汉字，这一传统沿用至今。由于许多的汉字是从图片演变而来，因此汉字的表意符的编码含有很丰富的信息。</p>
